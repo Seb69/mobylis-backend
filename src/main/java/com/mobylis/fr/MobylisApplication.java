@@ -1,4 +1,4 @@
-package com.mobylis.fr.mobylis;
+package com.mobylis.fr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

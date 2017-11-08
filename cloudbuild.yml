@@ -6,10 +6,8 @@ steps:
 
 - name: 'gcr.io/cloud-builders/docker'
   args: ["build",
-  "-t", "eu.gcr.io/$PROJECT_ID/$REPO_NAME:$TAG_NAME",
   "-t", "eu.gcr.io/$PROJECT_ID/$REPO_NAME:latest",
   "-f", "./src/main/docker/Dockerfile", "."]
 
 images:
-- 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:$TAG_NAME'
 - 'eu.gcr.io/$PROJECT_ID/$REPO_NAME:latest'
