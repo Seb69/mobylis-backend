@@ -4,5 +4,5 @@ sudo su - root
 docker run --rm \
             -v "$PWD":/home/gradle/project \
             -w /home/gradle/project \
-            gradle gradle assemble
+            gradle:alpine gradle assemble
 
