@@ -1,5 +1,4 @@
 #!/bin/bash
 echo "=> Building the binary"
 docker run -v "$PWD":/home/gradle/project:rw gradle:alpine gradle -s build
-ls
-echo $PWD
+cd hooks && ls
