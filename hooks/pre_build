@@ -1,8 +1,9 @@
 #!/bin/bash
 ls
 mkdir home
+cd home && mkdir gradle
 ls
 sudo su - root
 echo "=> Building the binary"
-docker run --privileged --rm -v "$PWD":/home/gradle/project -w /home/gradle/project -s gradle:alpine gradle build
+docker run --privileged --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:alpine gradle -s build
 ls
