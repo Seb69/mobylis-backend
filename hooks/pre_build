@@ -1,8 +1,4 @@
 #!/bin/bash
 echo "=> Building the binary"
-mkdir /home/gradle/project/.gradle
-sudo docker run --rm \
-            -v "$PWD":/home/gradle/project \
-            -w /home/gradle/project \
-            gradle:alpine gradle -s assemble
+docker run -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:alpine gradle -s assemble
 
