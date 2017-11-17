@@ -2,6 +2,7 @@
 ls
 mkdir home
 ls
+sudo su - root
 echo "=> Building the binary"
-docker run --privileged --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:alpine gradle build
+docker run --privileged --rm -v "$PWD":/home/gradle/project -w /home/gradle/project --stacktrace gradle:alpine gradle build
 ls
