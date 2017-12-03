@@ -1,5 +1,7 @@
 #!/bin/bash
 echo "=> Building the binary"
+echo "$USER"
+id -u -n
 echo $(pwd)
 ls -la
 echo "perm"
