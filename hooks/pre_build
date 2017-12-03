@@ -2,4 +2,6 @@
 echo "=> Building the binary"
 echo $(pwd)
 ls -la
+echo "perm"
+ls -ld .
 docker run --privileged --rm -v $(pwd):/home/gradle/project -w /home/gradle/project gradle:alpine gradle -s build
