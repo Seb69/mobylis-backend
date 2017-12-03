@@ -2,6 +2,7 @@
 echo "=> Building the binary"
 echo "$USER"
 id -u -n
+mkdirs /home/gradle/project/
 echo $(pwd)
 ls -la
 echo "perm"
