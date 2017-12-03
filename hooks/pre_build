@@ -1,3 +1,6 @@
 #!/bin/bash
 echo "=> Building the binary"
-docker run --privileged --rm -v $(pwd):/home/gradle/project -w /home/gradle/project gradle:alpine gradle -s build
+docker run --privileged --rm
+-v $(pwd):/home/gradle/project
+-v /var/run/docker.sock:/var/run/docker.sock
+-w /home/gradle/project gradle:alpine gradle -s build
