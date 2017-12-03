@@ -1,5 +1,5 @@
 #!/bin/bash
 echo "=> Building the binary"
 echo $(pwd)
-
+ls -la
 docker run --privileged --rm -v $(pwd):/home/gradle/project -w /home/gradle/project gradle:alpine gradle -s build
