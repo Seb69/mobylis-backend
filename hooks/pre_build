@@ -7,4 +7,4 @@ echo $(pwd)
 ls -la
 echo "perm"
 ls -ld .
-sudo docker run --privileged --rm -v $(pwd):/home/gradle/project -w /home/gradle/project gradle:alpine gradle -s build
+docker run --privileged --rm -v $(pwd):/home/gradle/project -w /home/gradle/project gradle:alpine gradle -s build --debug
