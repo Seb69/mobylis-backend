@@ -18,7 +18,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.mobylis.fr'
-version = '0.0.1-SNAPSHOT'
+//version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 9
 
 repositories {
@@ -38,6 +38,6 @@ dependencies {
     runtime('com.h2database:h2')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.projectreactor:reactor-test')
-    compileOnly('org.projectlombok:lombok')
+//    compileOnly('org.projectlombok:lombok:1.16.19')
 }
 //    runtime('mysql:mysql-connector-java')
