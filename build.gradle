@@ -36,6 +36,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('javax.xml.bind:jaxb-api:2.3.0')
     runtime('com.h2database:h2')
+    runtime('mysql:mysql-connector-java')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.projectreactor:reactor-test')
 //    compileOnly('org.projectlombok:lombok:1.16.19')
