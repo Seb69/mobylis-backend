@@ -1,17 +1,12 @@
 package com.mobylis.fr.domain;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author ANDRE
  * @since 10/12/2017
  */
+@MappedSuperclass
 public abstract class AbstractProduct {
 
 

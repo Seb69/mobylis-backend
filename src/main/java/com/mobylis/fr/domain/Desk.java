@@ -2,6 +2,7 @@ package com.mobylis.fr.domain;
 
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
@@ -9,6 +10,7 @@ import javax.persistence.Table;
  * @since 10/12/2017
  */
 @Table(name = "DESK")
+@Entity
 public class Desk extends AbstractProduct {
 
     @Column(name = "DIMENSION")

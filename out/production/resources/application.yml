@@ -1,7 +1,7 @@
 # H2 config
 spring:
   profiles:
-    active: local
+    active: dev
 
 # Server port
 server:
@@ -18,6 +18,7 @@ spring:
   h2:
     console:
       enabled: true
+      path: /h2
 
   datasource:
     driver-class-name: org.h2.Driver
@@ -38,13 +39,13 @@ spring:
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOSTNAME}:3306?useSSL=false
+    url: jdbc:mysql://${MYSQL_HOSTNAME}:3306/mobylis?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}
 
   jpa:
     show-sql: true
-    generate-ddl: false
+    generate-ddl: true
 ---
 ##
 # Profile: Test (docker swarm)
@@ -55,13 +56,13 @@ spring:
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306?useSSL=false
+    url: jdbc:mysql://mysql:3306/mobylis?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}
 
   jpa:
     show-sql: true
-    generate-ddl: true
+    generate-ddl: false
 ---
 ##
 # Profile: Prod (docker swarm)
@@ -73,6 +74,11 @@ spring:
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306?useSSL=false
+    url: jdbc:mysql://mysql:3306/mobylis?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}
+    name: mobylis
+
+  jpa:
+    show-sql: false
+    generate-ddl: false
