@@ -1,6 +1,17 @@
 # Mobylis - Backend 
 
-## Create Google Cloud Platform docker machine 
+## Get started 
+
+#### Local 
+ 
 ```bash
-docker-machine create --driver google --google-project mobylis-150315 --google-zone europe-west3-a --google-machine-type f1-micro mobylis
+gradle bootRun
 ```
+
+#### Dev 
+You need to create a properties file ad follow
+`````properties
+MYSQL_PASSWORD_FILE=_MYSQL_PASSWORD_
+MYSQL_HOSTNAME=_SERVER_HOST_
+`````
+And set MOBYLIS_CONFIG_FILE environment variable that point to your properties file. 

@@ -24,31 +24,38 @@ spring:
     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
     username: sa
     password:
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
 ---
 ##
 # Profile: Development
 # DATABASE: MYSQL - TEST
 ##
 spring:
-  profiles: dev
+  profiles: dev,development
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOSTNAME}:3306
+    url: jdbc:mysql://${MYSQL_HOSTNAME}:3306?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}
 
+  jpa:
+    show-sql: true
+    generate-ddl: false
 ---
 ##
 # Profile: Test (docker swarm)
 # DATABASE: MYSQL - TEST
 ##
 spring:
-  profiles: test
+  profiles: test,testing
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306
+    url: jdbc:mysql://mysql:3306?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}
 ---
@@ -57,11 +64,11 @@ spring:
 # DATABASE: MYSQL - PROD
 ##
 spring:
-  profiles: prod
+  profiles: prod,production
 
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306
+    url: jdbc:mysql://mysql:3306?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}

@@ -12,6 +12,6 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @PropertySource("file:${MOBYLIS_CONFIG_FILE}")
-@Profile("dev")
+@Profile({"dev", "development"})
 public class EnvironmentPropertiesConfiguration {
 }
