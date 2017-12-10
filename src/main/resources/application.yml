@@ -1,7 +1,7 @@
 # H2 config
 spring:
   profiles:
-    active: dev
+    active: test
 
 # Server port
 server:
@@ -58,6 +58,10 @@ spring:
     url: jdbc:mysql://mysql:3306?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
 ---
 ##
 # Profile: Prod (docker swarm)
