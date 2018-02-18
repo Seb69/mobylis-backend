@@ -19,6 +19,10 @@ public class SuperObjectRepository {
         this.client = client;
     }
 
-    public
+    public Object save(Object object) {
+
+
+        return null;
+    }
 
 }
