@@ -1,6 +1,5 @@
 package com.mobylis.fr.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -12,6 +11,4 @@ import javax.persistence.Table;
 @Entity
 public class OfficeSupport extends AbstractProduct {
 
-    @Column(name = "ILLNESS")
-    private String illness;
 }

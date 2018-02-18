@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MobylisApplication {
 
-	public static void main(String[] args){
-		SpringApplication.run(MobylisApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MobylisApplication.class, args);
+    }
 }

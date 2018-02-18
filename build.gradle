@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M7'
+        springBootVersion = '2.0.0.RC1'
     }
     repositories {
         mavenCentral()
@@ -29,8 +29,11 @@ repositories {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-webflux')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.elasticsearch.client:transport:6.0.1')
+    compile('org.elasticsearch.client:elasticsearch-rest-high-level-client:6.2.1')
+    compile('org.elasticsearch:elasticsearch:6.2.1')
     runtime('org.springframework.boot:spring-boot-devtools')
+    compile group: 'org.projectlombok', name: 'lombok-maven', version: '1.16.20.0', ext: 'pom'
+
     compile('javax.xml.bind:jaxb-api:2.3.0')
     runtime('com.h2database:h2')
     runtime('mysql:mysql-connector-java')

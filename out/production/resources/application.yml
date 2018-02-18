@@ -1,7 +1,7 @@
 # H2 config
 spring:
   profiles:
-    active: dev
+    active: local
 
 # Server port
 server:
@@ -29,6 +29,11 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: true
+
+elasticsearch:
+  scheme: http
+  host: localhost
+  port: 9200
 ---
 ##
 # Profile: Development
@@ -36,16 +41,22 @@ spring:
 ##
 spring:
   profiles: dev,development
+
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOSTNAME}:3306/mobylis?useSSL=false
+    url: jdbc:mysql://${GOOGLE_CLOUD_PLATFORM_HOSTNAME}:3306/mobylis?useSSL=false
     username: mobylis-backend
     password: ${MYSQL_PASSWORD_FILE}
 
   jpa:
     show-sql: true
     generate-ddl: true
+
+elasticsearch:
+  scheme: http
+  host: ${GOOGLE_CLOUD_PLATFORM_HOSTNAME}
+  port: 9200
 ---
 ##
 # Profile: Test (docker swarm)
@@ -53,6 +64,7 @@ spring:
 ##
 spring:
   profiles: test,testing
+
 # Database
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -63,6 +75,11 @@ spring:
   jpa:
     show-sql: true
     generate-ddl: false
+
+elasticsearch:
+  scheme: http
+  host: elasticsearch
+  port: 9200
 ---
 ##
 # Profile: Prod (docker swarm)
@@ -82,3 +99,8 @@ spring:
   jpa:
     show-sql: false
     generate-ddl: false
+
+elasticsearch:
+  scheme: http
+  host: elasticsearch
+  port: 9200

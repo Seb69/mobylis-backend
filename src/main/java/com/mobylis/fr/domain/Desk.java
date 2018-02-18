@@ -1,6 +1,5 @@
 package com.mobylis.fr.domain;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -17,4 +16,11 @@ public class Desk extends AbstractProduct {
     private String dimension;
 
 
+    public String getDimension() {
+        return dimension;
+    }
+
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
+    }
 }
