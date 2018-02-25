@@ -40,9 +40,9 @@ public class ElasticsearchConnection {
     public RestHighLevelClient restHighLevelClient() {
 
         LOG.info("Elasticsearch: start connection");
-        final HttpHost httpHost = new HttpHost(esHost, esPort, esScheme);
+        final HttpHost httpHostA = new HttpHost(esHost, esPort, esScheme);
 
-        final RestClientBuilder restClientBuilder = RestClient.builder(httpHost);
+        final RestClientBuilder restClientBuilder = RestClient.builder(httpHostA);
 
         client = new RestHighLevelClient(restClientBuilder);
 

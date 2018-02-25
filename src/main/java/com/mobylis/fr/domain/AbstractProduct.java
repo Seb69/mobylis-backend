@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * @since 10/12/2017
  */
 @MappedSuperclass
-abstract class AbstractProduct {
+public abstract class AbstractProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

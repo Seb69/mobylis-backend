@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Table(name = "DESK")
 @Entity
-public class Desk extends AbstractProduct {
+public class Deck extends AbstractProduct {
 
     @Column(name = "DIMENSION")
     private String dimension;

@@ -1,6 +1,6 @@
 package com.mobylis.fr.mock;
 
-import com.mobylis.fr.domain.Desk;
+import com.mobylis.fr.domain.Deck;
 
 import java.math.BigDecimal;
 
@@ -10,22 +10,23 @@ import java.math.BigDecimal;
  */
 public class Desk_Mock {
 
-    public static Desk createA() {
+    public static Deck createA() {
 
-        Desk desk = new Desk();
+        Deck desk = new Deck();
 
         desk.setName("Bureau Open Space");
         desk.setBrand("MOBEL LINEA");
-        desk.setDescription("Mobilier très robuste et comfortable.");
+        desk.setDescription("Mobilier très robuste et comfortable. " +
+                "Mobilier très robuste et comfortable.");
         desk.setPrice(BigDecimal.valueOf(570L));
 
         return desk;
     }
 
 
-    public static Desk createB() {
+    public static Deck createB() {
 
-        Desk desk = new Desk();
+        Deck desk = new Deck();
 
         desk.setName("Bureau Open Space");
         desk.setBrand("MOBEL LINEA");

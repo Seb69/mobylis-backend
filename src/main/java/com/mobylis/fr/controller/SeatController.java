@@ -1,7 +1,5 @@
 package com.mobylis.fr.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author ANDRE
@@ -9,6 +7,5 @@ import org.slf4j.LoggerFactory;
  */
 public class SeatController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SeatController.class);
 
 }
