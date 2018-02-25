@@ -40,7 +40,6 @@ import java.util.concurrent.TimeUnit;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ExcludeFromTests
 public class Index_EndToEndTest {
 
     @Autowired

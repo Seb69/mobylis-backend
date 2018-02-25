@@ -34,17 +34,6 @@ public class SuperObjectRepository {
         desk.setDescription("Mobilier très robuste et comfortable.");
         desk.setPrice(BigDecimal.valueOf(570L));
 
-//        IndexRequest indexRequest = new IndexRequest("decks", "doc", "1")
-//                .source("name", desk.getName(),
-//                        "brand", desk.getBrand(),
-//                        "price", desk.getPrice(),
-//                        "dimension", desk.getDimension(),
-//                        "description", desk.getDescription());
-//
-//        try {
-//            IndexResponse indexResponse = client.index(indexRequest);
-//        } catch (IOException e) {
-//        }
 
         CreateIndexRequest request = new CreateIndexRequest("decks");
 
