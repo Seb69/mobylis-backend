@@ -39,22 +39,17 @@ public class ElasticsearchConnection {
     @EventListener(ApplicationReadyEvent.class)
     public RestHighLevelClient restHighLevelClient() {
 
-        LOG.info("Elasticsearch: start connection");
-        final HttpHost httpHostA = new HttpHost(esHost, esPort, esScheme);
+        final HttpHost httpHost = new HttpHost(esHost, esPort, esScheme);
 
-        final RestClientBuilder restClientBuilder = RestClient.builder(httpHostA);
+        final RestClientBuilder restClientBuilder = RestClient.builder(httpHost);
 
-        client = new RestHighLevelClient(restClientBuilder);
-
-        return client;
+        return new RestHighLevelClient(restClientBuilder);
     }
 
     @EventListener(ContextClosedEvent.class)
     public void closeElasticSearchConnection() throws IOException {
 
-        LOG.info("Elasticsearch: close connection");
         this.client.close();
-
     }
 
 }

@@ -5,7 +5,7 @@ spring:
 
 # Server port
 server:
-  port: 9090
+  port: 9092
 
 elasticsearch:
   portA: 9200
@@ -37,29 +37,6 @@ elasticsearch:
   scheme: http
   host: localhost
   port: 9200
----
-##
-# Profile: Development
-# DATABASE: MYSQL - TEST
-##
-spring:
-  profiles: dev,development
-
-# Database
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${GOOGLE_CLOUD_PLATFORM_HOSTNAME}:3306/mobylis?useSSL=false
-    username: mobylis-backend
-    password: ${MYSQL_PASSWORD_FILE}
-
-  jpa:
-    show-sql: true
-    generate-ddl: true
-
-elasticsearch:
-  scheme: http
-  host: ${GOOGLE_CLOUD_PLATFORM_HOSTNAME}
-  portA: 9200
 ---
 ##
 # Profile: Test (docker swarm)
