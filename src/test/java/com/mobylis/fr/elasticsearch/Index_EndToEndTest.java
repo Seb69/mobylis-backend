@@ -1,7 +1,7 @@
 package com.mobylis.fr.elasticsearch;
 
-import com.mobylis.fr.domain.Deck;
-import com.mobylis.fr.mock.Desk_Mock;
+import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.mock.Product_Mock;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -43,7 +43,7 @@ import java.util.concurrent.TimeUnit;
 public class Index_EndToEndTest {
 
     @Autowired
-    Index index;
+    EsIndex index;
 
     @Before
     public void setUp() throws Exception {
@@ -54,16 +54,13 @@ public class Index_EndToEndTest {
     public void should_deleteIndex_data() throws Exception {
 
         // BUILD
-        Deck desk = Desk_Mock.createA();
+        Product desk = Product_Mock.createA();
         DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest();
-        deleteIndexRequest.indices("decks");
+        deleteIndexRequest.indices("posts");
 
         // OPERATE
-        final Mono<DeleteIndexResponse> indexResponseMono = index.deleteIndex(deleteIndexRequest);
+        final DeleteIndexResponse indexResponseMono = index.deleteIndex(deleteIndexRequest);
 
-        // CHECK
-        indexResponseMono.subscribe(System.out::println);
-        Thread.sleep(10000);
 
     }
 
@@ -90,21 +87,17 @@ public class Index_EndToEndTest {
     public void should_index_data() throws Exception {
 
         // BUILD
-        Deck desk = Desk_Mock.createA();
+        Product desk = Product_Mock.createA();
 
         IndexRequest indexRequest = new IndexRequest("decks", "doc")
                 .source("name", desk.getName(),
                         "brand", desk.getBrand(),
                         "price", desk.getPrice(),
-                        "dimension", desk.getDimension(),
                         "description", desk.getDescription());
 
         // OPERATE
-        final Mono<IndexResponse> indexResponseMono = index.index(indexRequest);
+        final IndexResponse indexResponseMono = index.index(indexRequest);
 
-        // CHECK
-        indexResponseMono.subscribe(indexResponse -> System.out.println(indexResponse.getResult()));
-        Thread.sleep(10000);
 
     }
 
@@ -115,11 +108,7 @@ public class Index_EndToEndTest {
         DeleteRequest deleteRequest = new DeleteRequest("decks", "doc", "QqrmyGEBYcaSTSpZkep-");
 
         // OPERATE
-        final Mono<DeleteResponse> delete = index.delete(deleteRequest);
-
-        // CHECK
-        delete.subscribe(indexResponse -> System.out.println(indexResponse.getResult()));
-        Thread.sleep(10000);
+        final DeleteResponse delete = index.delete(deleteRequest);
 
     }
 

@@ -1,40 +1,39 @@
-package com.mobylis.fr.repository;
+package com.mobylis.fr.service;
 
-import com.mobylis.fr.domain.Deck;
-import com.mobylis.fr.mock.Desk_Mock;
+import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.mock.Product_Mock;
 import org.junit.runner.RunWith;
 import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+
 /**
- * Tester : SuperObjectRepository
+ * Tester : ProductServiceImpl
  *
  * @author ANDRE
- * @since 18/02/2018
+ * @since 25/02/2018
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SuperObjectRepository_Test {
+public class ProductServiceImpl_EntToEndTest {
 
     @Autowired
-    SuperObjectRepository superObjectRepository;
-
+    ProductServiceImpl productServiceImpl;
 
     @Test
-    public void save() throws Exception {
+    public void createProduct() throws Exception {
 
         // BUILD
-        Deck desk = Desk_Mock.createB();
+        Product product = Product_Mock.createA();
 
 
         // MOCK
 
 
         // OPERATE
-        superObjectRepository.save(desk);
-
+        productServiceImpl.createProduct(product);
 
         // CHECK
 

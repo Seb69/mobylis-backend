@@ -28,12 +28,12 @@ import java.io.IOException;
  * @since 18/02/2018
  */
 @Component
-public class Index {
+public class EsIndex {
 
     private RestHighLevelClient client;
 
     @Autowired
-    public Index(RestHighLevelClient client) {
+    public EsIndex(RestHighLevelClient client) {
         this.client = client;
     }
 
@@ -42,58 +42,19 @@ public class Index {
         return client.indices().create(createIndexRequest);
     }
 
+    public DeleteIndexResponse deleteIndex(DeleteIndexRequest deleteIndexRequest) throws IOException {
 
-    public Mono<DeleteIndexResponse> deleteIndex(DeleteIndexRequest deleteIndexRequest) {
-
-        return Mono.create(sink -> {
-            client.indices().deleteAsync(deleteIndexRequest, new ActionListener<>() {
-
-                @Override
-                public void onResponse(DeleteIndexResponse deleteIndexResponse) {
-                    sink.success(deleteIndexResponse);
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    sink.error(e);
-                }
-            });
-        });
+        return client.indices().delete(deleteIndexRequest);
     }
 
-    public Mono<IndexResponse> index(IndexRequest indexRequest) {
+    public IndexResponse index(IndexRequest indexRequest) throws IOException {
 
-        return Mono.create(sink -> {
-            client.indexAsync(indexRequest, new ActionListener<>() {
-
-                @Override
-                public void onResponse(IndexResponse indexResponse) {
-                    sink.success(indexResponse);
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    sink.error(e);
-                }
-            });
-        });
+            return client.index(indexRequest);
     }
 
-    public Mono<DeleteResponse> delete(DeleteRequest deleteRequest) {
+    public DeleteResponse delete(DeleteRequest deleteRequest) throws IOException {
 
-        return Mono.create(sink -> {
-            client.deleteAsync(deleteRequest, new ActionListener<>() {
-                @Override
-                public void onResponse(DeleteResponse deleteResponse) {
-                    sink.success(deleteResponse);
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    sink.error(e);
-                }
-            });
-        });
+        return client.delete(deleteRequest);
     }
 
 

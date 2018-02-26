@@ -2,14 +2,11 @@
 spring:
   profiles:
     active: local
-
+  jackson.serialization.fail-on-empty-beans: false
 # Server port
 server:
   port: 9092
 
-elasticsearch:
-  portA: 9200
-  portB: 9201
 ---
 ##
 # Profile: Local
@@ -28,6 +25,32 @@ spring:
     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
     username: sa
     password:
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+
+elasticsearch:
+  scheme: http
+  host: localhost
+  port: 9200
+
+logging.level:
+    org.elasticsearch: DEBUG
+---
+##
+# Profile: Local
+# DATABASE: Swarm
+##
+spring:
+  profiles: local-swarm
+
+# Database
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mobylis?useSSL=false
+    username: mobylis-backend
+    password: ${MYSQL_PASSWORD_FILE}
 
   jpa:
     show-sql: true
