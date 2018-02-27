@@ -1,0 +1,109 @@
+# H2 config
+spring:
+  profiles:
+    active: local
+  jackson.serialization.fail-on-empty-beans: false
+# Server port
+server:
+  port: 9092
+
+---
+##
+# Profile: Local
+# DATABASE: H2
+##
+spring:
+  profiles: local
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+
+elasticsearch:
+  scheme: http
+  host: localhost
+  port: 9200
+
+logging.level:
+    org.elasticsearch: DEBUG
+---
+##
+# Profile: Local
+# DATABASE: Swarm
+##
+spring:
+  profiles: local-swarm
+
+# Database
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mobylis?useSSL=false
+    username: mobylis-backend
+    password: ${MYSQL_PASSWORD_FILE}
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+
+elasticsearch:
+  scheme: http
+  host: localhost
+  port: 9200
+---
+##
+# Profile: Test (docker swarm)
+# DATABASE: MYSQL - TEST
+##
+spring:
+  profiles: test,testing
+
+# Database
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/mobylis?useSSL=false
+    username: mobylis-backend
+    password: ${MYSQL_PASSWORD_FILE}
+
+  jpa:
+    show-sql: true
+    generate-ddl: false
+
+elasticsearch:
+  scheme: http
+  host: elasticsearch
+  port: 9200
+---
+##
+# Profile: Prod (docker swarm)
+# DATABASE: MYSQL - PROD
+##
+spring:
+  profiles: prod,production
+
+# Database
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/mobylis?useSSL=false
+    username: mobylis-backend
+    password: ${MYSQL_PASSWORD_FILE}
+    name: mobylis
+
+  jpa:
+    show-sql: false
+    generate-ddl: false
+
+elasticsearch:
+  scheme: http
+  host: elasticsearch
+  port: 9200

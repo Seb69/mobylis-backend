@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
  * @author ANDRE
  * @since 25/02/2018
  */
-@RequestMapping("/api/product")
 @RestController
 public class ProductController {
 
@@ -22,7 +21,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping
+    @PostMapping(value = "/api/product")
     @ResponseStatus(HttpStatus.CREATED)
     public void createProduct(@RequestBody Product product) throws CategoryNotFound {
 
@@ -30,17 +29,26 @@ public class ProductController {
     }
 
 
-    @PutMapping
-    public void updateProduct(@RequestBody Product product) throws CategoryNotFound {
+    @GetMapping(value = "/api/product")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void getProduct(@RequestParam("id") String id) {
 
-        productService.deleteProduct(product);
+//        productService.createProduct(product);
     }
 
 
-    @DeleteMapping
-    public void deleteProduct(@RequestBody Product product) throws CategoryNotFound {
 
-        productService.deleteProduct(product);
-    }
+//    @PutMapping
+//    public void updateProduct(@RequestBody Product product) throws CategoryNotFound {
+//
+//        productService.deleteProduct(product);
+//    }
+//
+//
+//    @DeleteMapping
+//    public void deleteProduct(@RequestBody Product product) throws CategoryNotFound {
+//
+//        productService.deleteProduct(product);
+//    }
 
 }

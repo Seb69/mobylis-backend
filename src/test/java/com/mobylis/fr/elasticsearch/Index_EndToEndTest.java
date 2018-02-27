@@ -17,9 +17,15 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.search.MultiMatchQuery;
+import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.rescore.RescorerBuilder;
 import org.junit.runner.RunWith;
 import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +37,7 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 /**
  * Tester : Index
@@ -48,6 +55,47 @@ public class Index_EndToEndTest {
     @Before
     public void setUp() throws Exception {
 
+    }
+
+    @Test
+    public void should_searchIndex_data() throws Exception {
+
+        // Search request
+        SearchRequest searchRequest = new SearchRequest("products");
+        searchRequest.types("doc");
+
+        // Query condition
+        MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder("SIEGES", "category", "name");
+        multiMatchQueryBuilder.field("category", 1)
+                .field("name", 2)
+                .fuzziness(Fuzziness.AUTO);
+
+        // Search details
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.query(multiMatchQueryBuilder);
+        sourceBuilder.from(0);
+        sourceBuilder.size(5);
+        String[] includeFields = new String[] {"name", "price", "brand"};
+        String[] excludeFields = new String[] {"description","category"};
+        sourceBuilder.fetchSource(includeFields, excludeFields);
+
+        searchRequest.source(sourceBuilder);
+
+        // OPERATE
+        final Mono<SearchResponse> searchResponse = index.search(searchRequest);
+
+        searchResponse.subscribe(searchResponse1 -> {
+
+            final SearchHit[] hits = searchResponse1.getHits().getHits();
+            System.out.println(hits.length);
+            Stream.of(hits).forEach(hits2 -> System.out.println(hits2.getSourceAsMap()));
+            Stream.of(hits)
+                    .forEach(searchHits -> {
+                        System.out.println(searchHits.toString());
+                    });
+        });
+
+        Thread.sleep(10000);
     }
 
     @Test
@@ -143,7 +191,7 @@ public class Index_EndToEndTest {
         GetRequest getRequest = new GetRequest("decks", "doc", "RKoDyWEBYcaSTSpZKeoQ");
 
         // OPERATE
-        final Flux<GetResponse> getResponseFlux = index.get(getRequest);
+        final Mono<GetResponse> getResponseFlux = index.get(getRequest);
 
         // CHECK
         getResponseFlux.subscribe(getResponse -> System.out.println(getResponse.getSourceAsString()));

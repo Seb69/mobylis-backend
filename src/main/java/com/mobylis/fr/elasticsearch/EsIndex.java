@@ -1,5 +1,6 @@
 package com.mobylis.fr.elasticsearch;
 
+import com.mobylis.fr.service.exception.ElasticSearchException;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
@@ -18,7 +19,6 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -47,24 +47,32 @@ public class EsIndex {
         return client.indices().delete(deleteIndexRequest);
     }
 
-    public IndexResponse index(IndexRequest indexRequest) throws IOException {
+    public IndexResponse index(IndexRequest indexRequest) {
 
+        try {
             return client.index(indexRequest);
+        } catch (IOException e) {
+            throw new ElasticSearchException("Fail to index: " + indexRequest.sourceAsMap().toString());
+        }
     }
 
-    public DeleteResponse delete(DeleteRequest deleteRequest) throws IOException {
+    public DeleteResponse delete(DeleteRequest deleteRequest) {
 
-        return client.delete(deleteRequest);
+        try {
+            return client.delete(deleteRequest);
+        } catch (IOException e) {
+            throw new ElasticSearchException("Fail to index: " + deleteRequest.toString());
+        }
     }
 
 
-    public Flux<GetResponse> get(GetRequest getRequest) {
+    public Mono<GetResponse> get(GetRequest getRequest) {
 
-        return Flux.create(sink -> {
+        return Mono.create(sink -> {
             client.getAsync(getRequest, new ActionListener<>() {
                 @Override
                 public void onResponse(GetResponse getResponse) {
-                    sink.next(getResponse);
+                    sink.success(getResponse);
                 }
 
                 @Override
@@ -94,21 +102,13 @@ public class EsIndex {
     }
 
 
-    public Mono<UpdateResponse> update(UpdateRequest updateRequest) {
+    public UpdateResponse update(UpdateRequest updateRequest) {
 
-        return Mono.create(sink -> {
-            client.updateAsync(updateRequest, new ActionListener<>() {
-                @Override
-                public void onResponse(UpdateResponse updateResponse) {
-                    sink.success(updateResponse);
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    sink.error(e);
-                }
-            });
-        });
+        try {
+            return client.update(updateRequest);
+        } catch (IOException e) {
+            throw new ElasticSearchException("Fail to index: " + updateRequest.toString());
+        }
     }
 
 

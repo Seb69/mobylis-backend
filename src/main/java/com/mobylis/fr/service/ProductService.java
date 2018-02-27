@@ -9,6 +9,7 @@ import com.mobylis.fr.service.exception.CategoryNotFound;
  */
 public interface ProductService {
     void createProduct(Product product);
+    void getProduct(Product product);
     void deleteProduct(Product product);
     void updateProduct(Product product);
 }

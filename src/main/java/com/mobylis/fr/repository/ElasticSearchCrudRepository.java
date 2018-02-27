@@ -6,10 +6,13 @@ import com.mobylis.fr.service.exception.ElasticSearchException;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
@@ -25,6 +28,7 @@ public class ElasticSearchCrudRepository implements CrudRepository {
 
     // Index
     private final static String INDEX_NAME = "products";
+    private final static String INDEX_TYPE = "doc";
 
     // Fields
     private final static String FIELD_NAME = "name";
@@ -54,8 +58,6 @@ public class ElasticSearchCrudRepository implements CrudRepository {
                         FIELD_CATEGORY, product.getCategory().getName(),
                         FIELD_DIMENSION, product.getDimension());
 
-        try {
-
             // Call elasticSearch
             final IndexResponse index = esIndex.index(indexRequest);
 
@@ -65,9 +67,6 @@ public class ElasticSearchCrudRepository implements CrudRepository {
             // Set ElasticSearch ID
             product.setElasticsearchId(index.getId());
 
-        } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + product.toString());
-        }
 
         return product;
     }
@@ -93,6 +92,18 @@ public class ElasticSearchCrudRepository implements CrudRepository {
         delete(product);
 
         return save(product);
+    }
+
+    public Product get(String id) {
+
+        GetRequest getRequest = new GetRequest(INDEX_NAME, INDEX_TYPE, id);
+
+        final Mono<GetResponse> getResponseMono = esIndex.get(getRequest);
+        getResponseMono.subscribe(getResponse -> {
+            System.out.println(getResponse);
+        });
+
+        return null;
     }
 
 }

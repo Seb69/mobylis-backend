@@ -36,6 +36,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void getProduct(Product product) {
+//        final Product product1 = elasticSearchService.get();
+
+//        elasticSearchService
+    }
+
+    @Override
     public void deleteProduct(Product product) {
 
         // Persist in Mysql Database
