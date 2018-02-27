@@ -10,12 +10,13 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.common.document.DocumentField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author ANDRE
@@ -58,14 +59,15 @@ public class ElasticSearchCrudRepository implements CrudRepository {
                         FIELD_CATEGORY, product.getCategory().getName(),
                         FIELD_DIMENSION, product.getDimension());
 
-            // Call elasticSearch
-            final IndexResponse index = esIndex.index(indexRequest);
+        // Call elasticSearch
+        final IndexResponse index = esIndex.index(indexRequest);
 
-            //  Checkout the indexResponse status
-            if (index.getResult() != DocWriteResponse.Result.CREATED) throw new ElasticSearchException("Product is not properly index: " + product.toString());
+        //  Checkout the indexResponse status
+        if (index.getResult() != DocWriteResponse.Result.CREATED)
+            throw new ElasticSearchException("Product is not properly index: " + product.toString());
 
-            // Set ElasticSearch ID
-            product.setElasticsearchId(index.getId());
+        // Set ElasticSearch ID
+        product.setElasticsearchId(index.getId());
 
 
         return product;
@@ -75,14 +77,10 @@ public class ElasticSearchCrudRepository implements CrudRepository {
     public void delete(Product product) {
         DeleteRequest deleteRequest = new DeleteRequest(INDEX_NAME, "doc", product.getElasticsearchId());
 
-        try {
-            final DeleteResponse delete = esIndex.delete(deleteRequest);
+        final DeleteResponse delete = esIndex.delete(deleteRequest);
 
-            if (delete.getResult() != DocWriteResponse.Result.DELETED) throw new ElasticSearchException("Product is not properly deleted: " + product.toString());
-
-        } catch (IOException e) {
-            throw new ElasticSearchException("Fail while deleting: " + product.toString());
-        }
+        if (delete.getResult() != DocWriteResponse.Result.DELETED)
+            throw new ElasticSearchException("Product is not properly deleted: " + product.toString());
 
     }
 
@@ -94,14 +92,20 @@ public class ElasticSearchCrudRepository implements CrudRepository {
         return save(product);
     }
 
-    public Product get(String id) {
+    public Mono<Product> get(String id) {
 
         GetRequest getRequest = new GetRequest(INDEX_NAME, INDEX_TYPE, id);
 
         final Mono<GetResponse> getResponseMono = esIndex.get(getRequest);
-        getResponseMono.subscribe(getResponse -> {
-            System.out.println(getResponse);
+
+        final Mono<Map<String, Object>> map = getResponseMono.map(GetResponse::getSourceAsMap);
+
+        map.subscribe(test -> {
+            System.out.println(test);
         });
+//        getResponseMono.subscribe(getResponse -> {
+//            System.out.println(getResponse);
+//        });
 
         return null;
     }

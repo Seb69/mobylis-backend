@@ -66,6 +66,16 @@ public class EsIndex {
     }
 
 
+    public UpdateResponse update(UpdateRequest updateRequest) {
+
+        try {
+            return client.update(updateRequest);
+        } catch (IOException e) {
+            throw new ElasticSearchException("Fail to update: " + updateRequest.toString());
+        }
+    }
+
+
     public Mono<GetResponse> get(GetRequest getRequest) {
 
         return Mono.create(sink -> {
@@ -99,16 +109,6 @@ public class EsIndex {
                 }
             });
         });
-    }
-
-
-    public UpdateResponse update(UpdateRequest updateRequest) {
-
-        try {
-            return client.update(updateRequest);
-        } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + updateRequest.toString());
-        }
     }
 
 

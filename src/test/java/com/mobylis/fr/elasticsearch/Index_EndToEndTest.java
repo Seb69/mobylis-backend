@@ -171,11 +171,8 @@ public class Index_EndToEndTest {
         UpdateRequest updateRequest = new UpdateRequest("decks", "doc", "QarkyGEBYcaSTSpZR-oO").doc(jsonMap);
 
         // OPERATE
-        final Mono<UpdateResponse> update = index.update(updateRequest);
+        final UpdateResponse update = index.update(updateRequest);
 
-        // CHECK
-        update.subscribe(indexResponse -> System.out.println(indexResponse.getResult()));
-        Thread.sleep(10000);
 
     }
 

@@ -7,6 +7,7 @@ import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.publisher.Mono;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
@@ -37,11 +38,11 @@ public class ElasticSearchCrudRepository_Test {
 
 
         // OPERATE
-        final Product product = elasticSearchCrudRepository.get("m0hc2GEB_Jo6pvCnTV3Y");
+        final Mono<Product> productMono = elasticSearchCrudRepository.get("qUhC2WEB_Jo6pvCnjl24");
 
 
         // CHECK
-        Thread.sleep(10000);
+        Thread.sleep(5000);
 
 
     }
