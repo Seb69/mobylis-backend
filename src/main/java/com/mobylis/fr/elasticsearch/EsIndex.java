@@ -37,14 +37,22 @@ public class EsIndex {
         this.client = client;
     }
 
-    public CreateIndexResponse createIndex(CreateIndexRequest createIndexRequest) throws IOException {
+    public CreateIndexResponse createIndex(CreateIndexRequest createIndexRequest) {
 
-        return client.indices().create(createIndexRequest);
+        try {
+            return client.indices().create(createIndexRequest);
+        } catch (IOException e) {
+            throw new ElasticSearchException("Fail to index: " + createIndexRequest.getDescription(), e);
+        }
     }
 
-    public DeleteIndexResponse deleteIndex(DeleteIndexRequest deleteIndexRequest) throws IOException {
+    public DeleteIndexResponse deleteIndex(DeleteIndexRequest deleteIndexRequest) {
 
-        return client.indices().delete(deleteIndexRequest);
+        try {
+            return client.indices().delete(deleteIndexRequest);
+        } catch (IOException e) {
+            throw new ElasticSearchException("Fail to index: " + deleteIndexRequest.getDescription(), e);
+        }
     }
 
     public IndexResponse index(IndexRequest indexRequest) {
@@ -52,7 +60,7 @@ public class EsIndex {
         try {
             return client.index(indexRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + indexRequest.sourceAsMap().toString());
+            throw new ElasticSearchException("Fail to index: " + indexRequest.getDescription(), e);
         }
     }
 
@@ -61,20 +69,18 @@ public class EsIndex {
         try {
             return client.delete(deleteRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + deleteRequest.toString());
+            throw new ElasticSearchException("Fail to index: " + deleteRequest.getDescription(), e);
         }
     }
-
 
     public UpdateResponse update(UpdateRequest updateRequest) {
 
         try {
             return client.update(updateRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to update: " + updateRequest.toString());
+            throw new ElasticSearchException("Fail to update: " + updateRequest.getDescription(), e);
         }
     }
-
 
     public Mono<GetResponse> get(GetRequest getRequest) {
 
@@ -110,6 +116,5 @@ public class EsIndex {
             });
         });
     }
-
 
 }

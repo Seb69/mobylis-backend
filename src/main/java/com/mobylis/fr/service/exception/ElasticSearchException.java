@@ -10,4 +10,8 @@ public class ElasticSearchException extends RuntimeException {
         super(message);
     }
 
+    public ElasticSearchException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

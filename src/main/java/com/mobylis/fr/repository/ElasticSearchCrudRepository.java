@@ -1,6 +1,8 @@
 package com.mobylis.fr.repository;
 
+import com.mobylis.fr.domain.Category;
 import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.dto.ProductSearchDTO;
 import com.mobylis.fr.elasticsearch.EsIndex;
 import com.mobylis.fr.service.exception.ElasticSearchException;
 import org.elasticsearch.action.DocWriteResponse;
@@ -98,10 +100,12 @@ public class ElasticSearchCrudRepository implements CrudRepository {
 
         final Mono<GetResponse> getResponseMono = esIndex.get(getRequest);
 
-        final Mono<Map<String, Object>> map = getResponseMono.map(GetResponse::getSourceAsMap);
+        final Mono<Map<String, Object>> sourceMapMono = getResponseMono.map(GetResponse::getSourceAsMap);
 
-        map.subscribe(test -> {
-            System.out.println(test);
+        sourceMapMono.subscribe(sourceMap -> {
+            Product product = new Product();
+            ProductSearchDTO productSearchDTO = new ProductSearchDTO();
+            product.setCategory((Category) sourceMap.get("category"));
         });
 //        getResponseMono.subscribe(getResponse -> {
 //            System.out.println(getResponse);
