@@ -1,11 +1,10 @@
 package com.mobylis.fr.repository;
 
-import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.domain.ProductMysql;
 import com.mobylis.fr.repository.projection.ProductProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @since 18/02/2018
  */
 @RepositoryRestResource(excerptProjection = ProductProjection.class)
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<ProductMysql,Long> {
 
-    List<Product> findAllByCategory_Name(@Param("name") String name);
+    List<ProductMysql> findAllByCategory_Name(@Param("name") String name);
 }

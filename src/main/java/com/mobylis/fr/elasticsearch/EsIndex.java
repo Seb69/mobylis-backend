@@ -42,7 +42,7 @@ public class EsIndex {
         try {
             return client.indices().create(createIndexRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + createIndexRequest.getDescription(), e);
+            throw new ElasticSearchException("Fail to create index: " + createIndexRequest.getDescription(), e);
         }
     }
 
@@ -51,7 +51,7 @@ public class EsIndex {
         try {
             return client.indices().delete(deleteIndexRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + deleteIndexRequest.getDescription(), e);
+            throw new ElasticSearchException("Fail to delete index: " + deleteIndexRequest.getDescription(), e);
         }
     }
 
@@ -60,7 +60,7 @@ public class EsIndex {
         try {
             return client.index(indexRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + indexRequest.getDescription(), e);
+            throw new ElasticSearchException("Fail to index document: " + indexRequest.getDescription(), e);
         }
     }
 
@@ -69,7 +69,7 @@ public class EsIndex {
         try {
             return client.delete(deleteRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to index: " + deleteRequest.getDescription(), e);
+            throw new ElasticSearchException("Fail to delete document: " + deleteRequest.getDescription(), e);
         }
     }
 
@@ -78,13 +78,13 @@ public class EsIndex {
         try {
             return client.update(updateRequest);
         } catch (IOException e) {
-            throw new ElasticSearchException("Fail to update: " + updateRequest.getDescription(), e);
+            throw new ElasticSearchException("Fail to update document: " + updateRequest.getDescription(), e);
         }
     }
 
     public Mono<GetResponse> get(GetRequest getRequest) {
 
-        return Mono.create(sink -> {
+        return Mono.create(sink ->
             client.getAsync(getRequest, new ActionListener<>() {
                 @Override
                 public void onResponse(GetResponse getResponse) {
@@ -95,13 +95,13 @@ public class EsIndex {
                 public void onFailure(Exception e) {
                     sink.error(e);
                 }
-            });
-        });
+            })
+        );
     }
 
     public Mono<SearchResponse> search(SearchRequest searchRequest) {
 
-        return Mono.create(sink -> {
+        return Mono.create(sink ->
             client.searchAsync(searchRequest, new ActionListener<>() {
 
                 @Override
@@ -113,8 +113,8 @@ public class EsIndex {
                 public void onFailure(Exception e) {
                     sink.error(e);
                 }
-            });
-        });
+            })
+        );
     }
 
 }

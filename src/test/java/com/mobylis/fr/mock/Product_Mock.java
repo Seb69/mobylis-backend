@@ -1,6 +1,6 @@
 package com.mobylis.fr.mock;
 
-import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.domain.ProductMysql;
 
 import java.math.BigDecimal;
 
@@ -10,9 +10,9 @@ import java.math.BigDecimal;
  */
 public class Product_Mock {
 
-    public static Product createA() {
+    public static ProductMysql createA() {
 
-        Product desk = new Product();
+        ProductMysql desk = new ProductMysql();
 
         desk.setName("Bureau Open Space");
         desk.setBrand("MOBEL LINEA");
@@ -25,9 +25,9 @@ public class Product_Mock {
     }
 
 
-    public static Product createB() {
+    public static ProductMysql createB() {
 
-        Product desk = new Product();
+        ProductMysql desk = new ProductMysql();
 
         desk.setName("Bureau Open Space");
         desk.setBrand("MOBEL LINEA");

@@ -1,6 +1,6 @@
 package com.mobylis.fr.elasticsearch;
 
-import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.domain.ProductMysql;
 import com.mobylis.fr.mock.Product_Mock;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
@@ -19,19 +19,15 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.search.MultiMatchQuery;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.rescore.RescorerBuilder;
 import org.junit.runner.RunWith;
 import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
@@ -102,7 +98,7 @@ public class Index_EndToEndTest {
     public void should_deleteIndex_data() throws Exception {
 
         // BUILD
-        Product desk = Product_Mock.createA();
+        ProductMysql desk = Product_Mock.createA();
         DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest();
         deleteIndexRequest.indices("posts");
 
@@ -135,7 +131,7 @@ public class Index_EndToEndTest {
     public void should_index_data() throws Exception {
 
         // BUILD
-        Product desk = Product_Mock.createA();
+        ProductMysql desk = Product_Mock.createA();
 
         IndexRequest indexRequest = new IndexRequest("decks", "doc")
                 .source("name", desk.getName(),

@@ -28,14 +28,14 @@ public class Category {
             mappedBy = "category",
             cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<Product> productSet = new HashSet<>();
+    private Set<ProductMysql> productSet = new HashSet<>();
 
-    public void addProduct(Product product) {
+    public void addProduct(ProductMysql product) {
         productSet.add(product);
         product.setCategory(this);
     }
 
-    public void removeProduct(Product product) {
+    public void removeProduct(ProductMysql product) {
         productSet.remove(product);
         product.setCategory(null);
     }

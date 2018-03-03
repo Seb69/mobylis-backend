@@ -1,9 +1,12 @@
 package com.mobylis.fr.domain;
 
+
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author ANDRE
@@ -11,7 +14,7 @@ import java.util.List;
  */
 @Table(name = "PRODUCT")
 @Entity
-public class Product {
+public class ProductMysql {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,7 +40,6 @@ public class Product {
     private String elasticsearchId;
 
     @Column(name = "IMAGES")
-    @CollectionTable(name = "images", joinColumns = @JoinColumn(name = "product_id"))
     @ElementCollection
     private List<String> images = new ArrayList<>();
 
@@ -54,6 +56,8 @@ public class Product {
                 ", price=" + price +
                 ", brand='" + brand + '\'' +
                 ", dimension='" + dimension + '\'' +
+                ", elasticsearchId='" + elasticsearchId + '\'' +
+                ", images=" + images +
                 ", category=" + category +
                 '}';
     }

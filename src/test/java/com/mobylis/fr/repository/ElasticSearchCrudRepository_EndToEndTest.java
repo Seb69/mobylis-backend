@@ -1,18 +1,15 @@
 package com.mobylis.fr.repository;
 
-import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.dto.ProductView;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
-import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Mono;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.*;
+import java.util.List;
 
 /**
  * Tester : ElasticSearchCrudRepository
@@ -22,11 +19,10 @@ import static org.hamcrest.Matchers.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ElasticSearchCrudRepository_Test {
+public class ElasticSearchCrudRepository_EndToEndTest {
 
     @Autowired
-    ElasticSearchCrudRepository elasticSearchCrudRepository;
-
+    ElasticSearchRepository elasticSearchRepository;
 
     @Test
     public void get() throws Exception {
@@ -38,13 +34,19 @@ public class ElasticSearchCrudRepository_Test {
 
 
         // OPERATE
-        final Mono<Product> productMono = elasticSearchCrudRepository.get("qUhC2WEB_Jo6pvCnjl24");
+        elasticSearchRepository.get("qUhC2WEB_Jo6pvCnjl24");
 
 
         // CHECK
         Thread.sleep(5000);
+    }
 
+    @Test
+    public void search_success() {
 
+        final Mono<List<ProductView>> test = elasticSearchRepository.search("tes");
+
+        Assert.assertNotNull(test.block());
+        System.out.println(test.block().toString());
     }
 }
-    

@@ -1,12 +1,8 @@
-# H2 config
-spring:
-  profiles:
-    active: local
-  jackson.serialization.fail-on-empty-beans: false
+
+#  jackson.serialization.fail-on-empty-beans: false
 # Server port
 server:
-  port: 9092
-
+  port: 9093
 ---
 ##
 # Profile: Local
@@ -35,8 +31,6 @@ elasticsearch:
   host: localhost
   port: 9200
 
-logging.level:
-    org.elasticsearch: DEBUG
 ---
 ##
 # Profile: Local
@@ -50,7 +44,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mobylis?useSSL=false
     username: mobylis-backend
-    password: ${MYSQL_PASSWORD_FILE}
+    password: g5zDRIUMsib7uUTCXh0Tsop2U6HEEvv
 
   jpa:
     show-sql: true
@@ -59,29 +53,6 @@ spring:
 elasticsearch:
   scheme: http
   host: localhost
-  port: 9200
----
-##
-# Profile: Test (docker swarm)
-# DATABASE: MYSQL - TEST
-##
-spring:
-  profiles: test,testing
-
-# Database
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/mobylis?useSSL=false
-    username: mobylis-backend
-    password: ${MYSQL_PASSWORD_FILE}
-
-  jpa:
-    show-sql: true
-    generate-ddl: false
-
-elasticsearch:
-  scheme: http
-  host: elasticsearch
   port: 9200
 ---
 ##

@@ -1,8 +1,9 @@
 package com.mobylis.fr.controller;
 
-import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.domain.ProductMysql;
+import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.repository.ElasticSearchRepository;
 import com.mobylis.fr.service.ProductService;
-import com.mobylis.fr.service.exception.CategoryNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,32 +24,30 @@ public class ProductController {
 
     @PostMapping(value = "/api/product")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createProduct(@RequestBody Product product) throws CategoryNotFound {
+    public ProductMysql createProduct(@RequestBody ProductView productView) {
 
-        productService.createProduct(product);
+        return productService.createProduct(productView);
     }
-
 
     @GetMapping(value = "/api/product")
     @ResponseStatus(HttpStatus.CREATED)
-    public void getProduct(@RequestParam("id") String id) {
+    public ProductMysql getProduct(@RequestParam("id") Long id) {
 
-//        productService.createProduct(product);
+        return productService.getProduct(id);
     }
 
+    @PutMapping(value = "/api/product")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void updateProduct(@RequestBody ProductMysql product) {
 
+        productService.updateProduct(product);
+    }
 
-//    @PutMapping
-//    public void updateProduct(@RequestBody Product product) throws CategoryNotFound {
-//
-//        productService.deleteProduct(product);
-//    }
-//
-//
-//    @DeleteMapping
-//    public void deleteProduct(@RequestBody Product product) throws CategoryNotFound {
-//
-//        productService.deleteProduct(product);
-//    }
+    @DeleteMapping(value = "/api/product")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteProduct(@RequestBody Long id) {
+
+        productService.deleteProduct(id);
+    }
 
 }
