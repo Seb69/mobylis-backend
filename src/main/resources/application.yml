@@ -1,3 +1,5 @@
+server:
+  port: 80
 
 cloudinary:
   cloud-name: dqismn81g
@@ -8,9 +10,7 @@ cloudinary:
 # Profile: Local-swarm launched
 # DATABASE: Swarm
 ##
-# Server port
-server:
-  port: 9093
+
 spring:
   profiles: local-swarm
 
@@ -40,9 +40,7 @@ logging.level:
 # Profile: Prod (docker swarm)
 # DATABASE: MYSQL - PROD
 ##
-# Server port
-server:
-  port: 9090
+
 spring:
   profiles: prod,production
 
