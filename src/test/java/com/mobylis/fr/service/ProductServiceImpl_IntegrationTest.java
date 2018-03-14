@@ -3,7 +3,7 @@ package com.mobylis.fr.service;
 import com.mobylis.fr.configuration.TestConfiguration;
 import com.mobylis.fr.domain.ProductEs;
 import com.mobylis.fr.domain.ProductMysql;
-import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.dto.ProductCreationDTO;
 import com.mobylis.fr.mock.ProductCreationDTO_Mock;
 import com.mobylis.fr.mock.Product_Mock;
 import com.mobylis.fr.repository.ElasticSearchRepository;
@@ -14,7 +14,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,17 +44,17 @@ public class ProductServiceImpl_IntegrationTest {
     public void createProduct_success() throws Exception {
 
         // BUILD
-        ProductView product = ProductCreationDTO_Mock.createA();
+        ProductCreationDTO product = ProductCreationDTO_Mock.createA();
 
         // MOCK
         Mockito.when(elasticSearchRepository.save(ArgumentMatchers.any(ProductEs.class))).thenReturn("JVGHJD");
         Mockito.when(mysqlRepository.save(ArgumentMatchers.any(ProductMysql.class))).thenReturn(Product_Mock.createA());
 
         // OPERATE
-        final ProductMysql savedProduct = productServiceImpl.createProduct(product);
+        final ProductCreationDTO productCreationDTO = productServiceImpl.createProduct(product);
 
         // CHECK
-        Assert.assertNotNull(savedProduct);
+        Assert.assertNotNull(productCreationDTO);
 
     }
 
@@ -63,7 +62,7 @@ public class ProductServiceImpl_IntegrationTest {
     public void createProduct_elasticsearch_throw_runtimeException() throws Exception {
 
         // BUILD
-        ProductView product = ProductCreationDTO_Mock.createA();
+        ProductCreationDTO product = ProductCreationDTO_Mock.createA();
 
         // MOCK
         Mockito.when(elasticSearchRepository.save(ArgumentMatchers.any(ProductEs.class))).thenThrow(new IllegalArgumentException());
@@ -77,7 +76,7 @@ public class ProductServiceImpl_IntegrationTest {
     public void createProduct_mysql_throw_runtimeException() throws Exception {
 
         // BUILD
-        ProductView product = ProductCreationDTO_Mock.createA();
+        ProductCreationDTO product = ProductCreationDTO_Mock.createA();
 
         // MOCK
         Mockito.when(elasticSearchRepository.save(ArgumentMatchers.any(ProductEs.class))).thenReturn("bjeze");

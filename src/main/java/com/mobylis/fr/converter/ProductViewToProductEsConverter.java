@@ -1,7 +1,7 @@
 package com.mobylis.fr.converter;
 
 import com.mobylis.fr.domain.ProductEs;
-import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.dto.ProductCreationDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
  * @since 28/02/2018
  */
 @Component
-public class ProductViewToProductEsConverter implements Converter<ProductView, ProductEs> {
+public class ProductViewToProductEsConverter implements Converter<ProductCreationDTO, ProductEs> {
 
 
     @Override
-    public ProductEs convert(ProductView productCreationDTO) {
+    public ProductEs convert(ProductCreationDTO productCreationDTO) {
 
         ProductEs productEs = new ProductEs();
 
@@ -25,7 +25,7 @@ public class ProductViewToProductEsConverter implements Converter<ProductView, P
         productEs.setPrice(productCreationDTO.getPrice());
         productEs.setImages(productCreationDTO.getImages());
         productEs.setCategory(productCreationDTO.getCategory());
-
+        productEs.setSubCategory(productCreationDTO.getSubCategory());
         return productEs;
     }
 }

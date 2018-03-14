@@ -24,6 +24,10 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 
 /**
+ * This class has 2 responsabiliries
+ * - handle low level call (synchrone and asynchronous)
+ * - handle low level errors
+ *
  * @author ANDRE
  * @since 18/02/2018
  */

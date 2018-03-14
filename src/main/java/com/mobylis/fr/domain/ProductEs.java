@@ -24,6 +24,16 @@ public class ProductEs {
 
     private String category;
 
+    private String subCategory;
+
+    public String getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(String subCategory) {
+        this.subCategory = subCategory;
+    }
+
     public String getName() {
         return name;
     }

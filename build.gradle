@@ -28,12 +28,15 @@ test {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-webflux')
-    compile('org.springframework.boot:spring-boot-starter-data-rest') {
-        exclude module: "spring-boot-starter-tomcat"
-    }
+//    compile 'org.springframework.security:spring-security-oauth2-client'
+    compile 'org.springframework.security:spring-security-config'
+    compile 'org.springframework.security:spring-security-web'
+    compile 'org.springframework.security:spring-security-core'
+    testCompile 'org.springframework.security:spring-security-test'
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('javax.xml.bind:jaxb-api:2.3.0')
     compile('org.projectlombok:lombok-maven:1.16.20.0')
+    compile group: 'com.cloudinary', name: 'cloudinary-http44', version: '1.17.0'
     compile('org.elasticsearch.client:elasticsearch-rest-high-level-client:6.2.2')
     compile('org.elasticsearch:elasticsearch:6.2.2')
 //    runtime('org.springframework.boot:spring-boot-devtools')

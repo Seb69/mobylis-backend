@@ -3,7 +3,6 @@ package com.mobylis.fr.repository;
 import com.mobylis.fr.domain.ProductEs;
 import com.mobylis.fr.domain.ProductMysql;
 import com.mobylis.fr.dto.ProductSearchDTO;
-import com.mobylis.fr.dto.ProductView;
 import com.mobylis.fr.elasticsearch.EsIndex;
 import com.mobylis.fr.repository.exception.ElasticSearchRepositoryException;
 import org.elasticsearch.action.DocWriteResponse;
@@ -28,10 +27,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
+ * This has 2 responsibilities
+ * - create elasticsearch request object
+ * - convert response object into exploitable object
+ *
  * @author ANDRE
  * @since 25/02/2018
  */
@@ -52,6 +53,7 @@ public class ElasticSearchRepository {
     private final static String FIELD_IMAGES = "images";
     private final static String FIELD_PRICE = "price";
     private final static String FIELD_CATEGORY = "category";
+    private final static String FIELD_SUBCATEGORY = "subCategory";
     private final static String FIELD_DIMENSION = "dimension";
 
     @Autowired
@@ -69,6 +71,7 @@ public class ElasticSearchRepository {
                         FIELD_IMAGES, productEs.getImages(),
                         FIELD_PRICE, productEs.getPrice(),
                         FIELD_CATEGORY, productEs.getCategory(),
+                        FIELD_SUBCATEGORY, productEs.getSubCategory(),
                         FIELD_DIMENSION, productEs.getDimension());
 
         // Save in elasticSearch
@@ -91,14 +94,16 @@ public class ElasticSearchRepository {
             throw new ElasticSearchRepositoryException("Product is not properly deleted with id: " + id);
     }
 
-    public ProductEs update(ProductMysql product) {
+    public ProductEs update(ProductEs product, String id) {
 
-        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME, INDEX_TYPE, product.getElasticsearchId())
+        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME, INDEX_TYPE, id)
                 .doc(FIELD_NAME, product.getName(),
                         FIELD_DESCRIPTION, product.getDescription(),
                         FIELD_BRAND, product.getBrand(),
                         FIELD_PRICE, product.getPrice(),
+                        FIELD_IMAGES, product.getImages(),
                         FIELD_CATEGORY, product.getCategory(),
+                        FIELD_SUBCATEGORY, product.getSubCategory(),
                         FIELD_DIMENSION, product.getDimension());
 
         final UpdateResponse update = esIndex.update(updateRequest);
@@ -123,14 +128,15 @@ public class ElasticSearchRepository {
                 .map(getRequestMono -> conversionService.convert(getRequestMono.getSourceAsMap(), ProductSearchDTO.class));
     }
 
-    public Mono<List<ProductView>> search(String searchText) {
+    public Mono<List<ProductSearchDTO>> search(String searchText) {
 
         // Create search request on index only
         SearchRequest searchRequest = new SearchRequest(INDEX_NAME);
 
         // Fine tune the search
         MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(searchText);
-        multiMatchQueryBuilder.field(FIELD_DESCRIPTION, 1)
+        multiMatchQueryBuilder
+                .field(FIELD_DESCRIPTION, 1)
                 .field(FIELD_NAME, 2)
                 .fuzziness(Fuzziness.AUTO);
 
@@ -147,16 +153,11 @@ public class ElasticSearchRepository {
 
         final Mono<SearchResponse> searchResponseMono = esIndex.search(searchRequest);
 
-
+        // Convert SerachResponse to List
         return searchResponseMono
                 .map(searchResponse -> {
                     final SearchHit[] hits = searchResponse.getHits().getHits();
-                    return Stream.of(hits)
-                            .map(hit -> {
-                                final Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-                                return conversionService.convert(sourceAsMap, ProductView.class);
-                            })
-                            .collect(Collectors.toList());
+                    return conversionService.convert(hits, List.class);
                 });
     }
 

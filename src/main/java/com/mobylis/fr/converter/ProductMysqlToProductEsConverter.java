@@ -2,7 +2,6 @@ package com.mobylis.fr.converter;
 
 import com.mobylis.fr.domain.ProductEs;
 import com.mobylis.fr.domain.ProductMysql;
-import com.mobylis.fr.dto.ProductView;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +18,12 @@ public class ProductMysqlToProductEsConverter implements Converter<ProductMysql,
 
         ProductEs productEs = new ProductEs();
 
-        productEs.setName(productEs.getName());
-        productEs.setDescription(productEs.getDescription());
-        productEs.setBrand(productEs.getBrand());
-        productEs.setDimension(productEs.getDimension());
-        productEs.setPrice(productEs.getPrice());
-        productEs.setImages(productEs.getImages());
+        productEs.setName(product.getName());
+        productEs.setDescription(product.getDescription());
+        productEs.setBrand(product.getBrand());
+        productEs.setDimension(product.getDimension());
+        productEs.setPrice(product.getPrice());
+        productEs.setImages(product.getImages());
 
         if (product.getCategory().getName() != null) {
             productEs.setCategory(product.getCategory().getName());

@@ -2,12 +2,10 @@ package com.mobylis.fr.service;
 
 import com.mobylis.fr.domain.ProductEs;
 import com.mobylis.fr.domain.ProductMysql;
-import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.dto.ProductCreationDTO;
 import com.mobylis.fr.repository.ElasticSearchRepository;
 import com.mobylis.fr.repository.MysqlRepository;
 import com.mobylis.fr.service.exception.ProductServiceException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -21,8 +19,6 @@ import java.util.concurrent.ExecutionException;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-
-    private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
 
     // database repositories
     private MysqlRepository mysqlService;
@@ -40,25 +36,26 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductMysql createProduct(ProductView productCreationDTO) {
+    public ProductCreationDTO createProduct(ProductCreationDTO productView) {
 
 
-        final CompletableFuture<ProductMysql> saveProduct = CompletableFuture
+        final CompletableFuture<ProductCreationDTO> saveProduct = CompletableFuture
                 .supplyAsync(() -> {
-                    final ProductEs convert = conversionService.convert(productCreationDTO, ProductEs.class);
+                    final ProductEs convert = conversionService.convert(productView, ProductEs.class);
                     final String savedID = elasticSearchService.save(convert);
-                    productCreationDTO.setElasticsearchId(savedID);
+                    productView.setElasticsearchId(savedID);
                     return savedID;
                 })
                 .thenApply((elasticsearchID) -> {
-                    final ProductMysql convert = conversionService.convert(productCreationDTO, ProductMysql.class);
-                    return mysqlService.save(convert);
+                    final ProductMysql convert = conversionService.convert(productView, ProductMysql.class);
+                    final ProductMysql save = mysqlService.save(convert);
+                    return conversionService.convert(save, ProductCreationDTO.class);
                 })
                 .exceptionally((ex) -> {
-                    if (productCreationDTO.getElasticsearchId() != null) {
-                        elasticSearchService.delete(productCreationDTO.getElasticsearchId());
+                    if (productView.getElasticsearchId() != null) {
+                        elasticSearchService.delete(productView.getElasticsearchId());
                     }
-                    throw new ProductServiceException("Failed to save product in Mysql database", ex);
+                    throw new ProductServiceException("Failed to save product in database", ex);
                 });
 
         try {
@@ -99,19 +96,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductMysql updateProduct(ProductMysql product) {
-        // Mysql
-        final ProductMysql update = mysqlService.update(product);
+    public ProductCreationDTO updateProduct(ProductCreationDTO productView) {
 
+        // Convert
+        final ProductEs productEs = conversionService.convert(productView, ProductEs.class);
         // ElasticSearch
-        elasticSearchService.update(product);
+        final ProductEs productEsUpdated = elasticSearchService.update(productEs, productView.getElasticsearchId());
 
-        return update;
+        final ProductMysql convert = conversionService.convert(productView, ProductMysql.class);
+        final ProductMysql update = mysqlService.update(convert);
+
+        return  conversionService.convert(update, ProductCreationDTO.class);
     }
 
     @Override
-    public ProductMysql getProduct(Long id) {
-        return mysqlService.findById(id);
+    public ProductCreationDTO getProduct(Long id) {
+        final ProductMysql byId = mysqlService.findById(id);
+        return conversionService.convert(byId, ProductCreationDTO.class);
     }
 
 }

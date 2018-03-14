@@ -23,6 +23,8 @@ public class ConversionServiceConfig {
         formattingConversionService.addConverter(new MapToProductEsConverter());
         formattingConversionService.addConverter(new ProductViewToProductEsConverter());
         formattingConversionService.addConverter(new ProductMysqlToProductEsConverter());
+        formattingConversionService.addConverter(new MapToProductSearchDTOConverter());
+        formattingConversionService.addConverter(new SearchHitsToProductSearchDTOListConverter());
         return formattingConversionService;
     }
 

@@ -1,7 +1,7 @@
 package com.mobylis.fr.converter;
 
 import com.mobylis.fr.domain.ProductMysql;
-import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.dto.ProductCreationDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -10,24 +10,26 @@ import org.springframework.stereotype.Component;
  * @since 28/02/2018
  */
 @Component
-public class ProductMysqlToProductViewConverter implements Converter<ProductMysql, ProductView> {
+public class ProductMysqlToProductViewConverter implements Converter<ProductMysql, ProductCreationDTO> {
 
 
     @Override
-    public ProductView convert(ProductMysql product) {
+    public ProductCreationDTO convert(ProductMysql product) {
 
-        ProductView productCreationDTO = new ProductView();
+        ProductCreationDTO productView = new ProductCreationDTO();
 
-        productCreationDTO.setName(productCreationDTO.getName());
-        productCreationDTO.setDescription(productCreationDTO.getDescription());
-        productCreationDTO.setBrand(productCreationDTO.getBrand());
-        productCreationDTO.setDimension(productCreationDTO.getDimension());
-        productCreationDTO.setPrice(productCreationDTO.getPrice());
-        productCreationDTO.setImages(productCreationDTO.getImages());
-        productCreationDTO.setElasticsearchId(productCreationDTO.getElasticsearchId());
 
-        productCreationDTO.setCategory(product.getCategory().getName());
+        productView.setId(product.getId());
+        productView.setName(product.getName());
+        productView.setDescription(product.getDescription());
+        productView.setBrand(product.getBrand());
+        productView.setDimension(product.getDimension());
+        productView.setPrice(product.getPrice());
+        productView.setImages(product.getImages());
+        productView.setElasticsearchId(product.getElasticsearchId());
 
-        return productCreationDTO;
+        productView.setCategory(product.getCategory().getName());
+
+        return productView;
     }
 }

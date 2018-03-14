@@ -1,6 +1,6 @@
 package com.mobylis.fr.converter;
 
-import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.dto.ProductCreationDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +13,13 @@ import java.util.Map;
  * @since 28/02/2018
  */
 @Component
-public class MapToProductViewConverter implements Converter<Map, ProductView> {
+public class MapToProductViewConverter implements Converter<Map, ProductCreationDTO> {
 
 
     @Override
-    public ProductView convert(Map source) {
+    public ProductCreationDTO convert(Map source) {
 
-        ProductView productView = new ProductView();
+        ProductCreationDTO productView = new ProductCreationDTO();
 
         if ((source.get("name") != null)) {
             productView.setName((String) source.get("name"));
@@ -32,6 +32,9 @@ public class MapToProductViewConverter implements Converter<Map, ProductView> {
         }
         if ((source.get("category") != null)) {
             productView.setCategory((String) source.get("category"));
+        }
+        if ((source.get("subCategory") != null)) {
+            productView.setSubCategory((String) source.get("subCategory"));
         }
         if ((source.get("dimension") != null)) {
             productView.setDimension((String) source.get("dimension"));

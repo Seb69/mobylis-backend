@@ -2,7 +2,8 @@ package com.mobylis.fr.converter;
 
 import com.mobylis.fr.domain.Category;
 import com.mobylis.fr.domain.ProductMysql;
-import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.domain.SubCategory;
+import com.mobylis.fr.dto.ProductCreationDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Component;
  * @since 28/02/2018
  */
 @Component
-public class ProductViewToProductMysqlConverter implements Converter<ProductView, ProductMysql> {
+public class ProductViewToProductMysqlConverter implements Converter<ProductCreationDTO, ProductMysql> {
 
 
     @Override
-    public ProductMysql convert(ProductView productCreationDTO) {
+    public ProductMysql convert(ProductCreationDTO productCreationDTO) {
 
         ProductMysql product = new ProductMysql();
 
@@ -28,8 +29,10 @@ public class ProductViewToProductMysqlConverter implements Converter<ProductView
         product.setElasticsearchId(productCreationDTO.getElasticsearchId());
         Category category = new Category();
         category.setName(productCreationDTO.getCategory());
-
+        SubCategory subCategory = new SubCategory();
+        subCategory.setName(productCreationDTO.getSubCategory());
         product.setCategory(category);
+        product.setSubCategory(subCategory);
 
         return product;
     }

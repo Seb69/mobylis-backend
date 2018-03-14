@@ -20,9 +20,7 @@ import java.io.IOException;
  * @since 10/12/2017
  */
 @Configuration
-public class ElasticsearchConnection {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ElasticsearchConnection.class);
+public class ElasticsearchConfig {
 
     @Value("${elasticsearch.scheme}")
     private String esScheme;
@@ -36,14 +34,15 @@ public class ElasticsearchConnection {
     private RestHighLevelClient client;
 
     @Bean
-    @EventListener(ApplicationReadyEvent.class)
     public RestHighLevelClient restHighLevelClient() {
 
         final HttpHost httpHost = new HttpHost(esHost, esPort, esScheme);
 
         final RestClientBuilder restClientBuilder = RestClient.builder(httpHost);
 
-        return new RestHighLevelClient(restClientBuilder);
+        client = new RestHighLevelClient(restClientBuilder);
+
+        return client;
     }
 
     @EventListener(ContextClosedEvent.class)

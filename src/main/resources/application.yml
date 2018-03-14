@@ -1,41 +1,16 @@
 
-#  jackson.serialization.fail-on-empty-beans: false
+cloudinary:
+  cloud-name: dqismn81g
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
+---
+##
+# Profile: Local-swarm launched
+# DATABASE: Swarm
+##
 # Server port
 server:
   port: 9093
----
-##
-# Profile: Local
-# DATABASE: H2
-##
-spring:
-  profiles: local
-
-  h2:
-    console:
-      enabled: true
-      path: /h2
-
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-
-  jpa:
-    show-sql: true
-    generate-ddl: true
-
-elasticsearch:
-  scheme: http
-  host: localhost
-  port: 9200
-
----
-##
-# Profile: Local
-# DATABASE: Swarm
-##
 spring:
   profiles: local-swarm
 
@@ -44,7 +19,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mobylis?useSSL=false
     username: mobylis-backend
-    password: g5zDRIUMsib7uUTCXh0Tsop2U6HEEvv
+    password: ${MYSQL_PASSWORD_FILE}
 
   jpa:
     show-sql: true
@@ -54,11 +29,20 @@ elasticsearch:
   scheme: http
   host: localhost
   port: 9200
+
+
+logging.level:
+#    root: debug
+    org.springframework.web: debug
+    org.springframework.security: debug
 ---
 ##
 # Profile: Prod (docker swarm)
 # DATABASE: MYSQL - PROD
 ##
+# Server port
+server:
+  port: 9090
 spring:
   profiles: prod,production
 
@@ -78,3 +62,4 @@ elasticsearch:
   scheme: http
   host: elasticsearch
   port: 9200
+

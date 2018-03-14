@@ -1,7 +1,12 @@
-# H2 config
-spring:
-  profiles:
-    active: test
+## H2 config
+#spring:
+#  profiles:
+#    active: test
+
+cloudinary:
+  cloud-name: dqismn81g
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
 ---
 ##
 # Profile: TEST

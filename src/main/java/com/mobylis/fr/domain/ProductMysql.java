@@ -47,9 +47,14 @@ public class ProductMysql {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sub_category_id")
+    private SubCategory subCategory;
+
+
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductMysql{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
@@ -59,7 +64,16 @@ public class ProductMysql {
                 ", elasticsearchId='" + elasticsearchId + '\'' +
                 ", images=" + images +
                 ", category=" + category +
+                ", subCategory=" + subCategory +
                 '}';
+    }
+
+    public SubCategory getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
     }
 
     public List<String> getImages() {

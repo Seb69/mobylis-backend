@@ -3,7 +3,11 @@ package com.mobylis.fr;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import reactor.core.publisher.Flux;
+
+import java.util.stream.Collectors;
 
 /**
  * @author ANDRE
@@ -15,19 +19,12 @@ public class UnitTest {
     @Test
     public void name() throws Exception {
 
-        Flux<String> intervalFlux2 = Flux.just("{A}", "{B}", "{C}")
-                .map(source -> {
+        final Flux<String> just = Flux.just("A", "B", "C", "D", "E");
 
-                    // Sleep 1 s
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                    }
+        just
+                .as(stringFlux -> 'A')
+                .log();
 
-                    return "item " + source;
-                });
 
-        intervalFlux2.subscribe(System.out::println);
-        Thread.sleep(20000);
     }
 }

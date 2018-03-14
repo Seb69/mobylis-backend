@@ -1,6 +1,6 @@
 package com.mobylis.fr.mock;
 
-import com.mobylis.fr.dto.ProductView;
+import com.mobylis.fr.dto.ProductCreationDTO;
 
 import java.math.BigDecimal;
 
@@ -10,9 +10,9 @@ import java.math.BigDecimal;
  */
 public class ProductCreationDTO_Mock {
 
-    public static ProductView createA() {
+    public static ProductCreationDTO createA() {
 
-        ProductView productCreationDTO = new ProductView();
+        ProductCreationDTO productCreationDTO = new ProductCreationDTO();
 
         productCreationDTO.setName("Bureau Open Space");
         productCreationDTO.setBrand("MOBEL LINEA");
@@ -25,9 +25,9 @@ public class ProductCreationDTO_Mock {
     }
 
 
-    public static ProductView createB() {
+    public static ProductCreationDTO createB() {
 
-        ProductView productCreationDTO = new ProductView();
+        ProductCreationDTO productCreationDTO = new ProductCreationDTO();
 
         productCreationDTO.setName("Bureau Open Space");
         productCreationDTO.setBrand("MOBEL LINEA");
