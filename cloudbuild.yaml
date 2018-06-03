@@ -2,6 +2,7 @@ steps:
 - name: 'ubuntu'
   args:
   - 'ls'
+  - '-help'
 - name: 'gcr.io/cloud-builders/git'
   args:
   - 'clone'
