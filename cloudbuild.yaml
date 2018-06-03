@@ -1,6 +1,19 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
+  - 'pull'
+  - 'gradle:4.7.0-jdk10'
+  - '-v'
+  - '/workspace:/home/gradle/project'
+  - '-w'
+  - '/home/gradle/project'
+  - 'gradle:4.7.0-jdk10'
+  - 'gradle'
+  - 'build'
+  - '--debug'
+- name: 'gcr.io/cloud-builders/docker'
+  dir: 'dist'
+  args:
   - 'run'
   - '--rm'
   - '-v'
