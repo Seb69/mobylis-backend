@@ -1,6 +1,8 @@
 steps:
-#- name: 'ubuntu'
-#  args:
+- name: 'ubuntu'
+  dir: 'dist'
+  args:
+  - 'ls'
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'pull'
