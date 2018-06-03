@@ -9,6 +9,10 @@ steps:
   - '-R'
   - '777'
   - '/workspace'
+- name: 'ubuntu'
+  args:
+  - 'ls'
+  - '-l'
 #- name: 'gcr.io/cloud-builders/git'
 #  args:
 #  - 'clone'
