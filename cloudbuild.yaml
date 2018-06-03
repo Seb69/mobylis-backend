@@ -1,15 +1,18 @@
 steps:
+- name: 'ubuntu'
+  args:
+  - 'pwd'
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'pull'
   - 'gradle:4.7.0-jdk10'
-- name: 'gcr.io/cloud-builders/docker'
+- name: 'gcr.io/cloud-builders/bash'
   dir: 'dist'
   args:
   - 'run'
   - '--rm'
   - '-v'
-  - 'dist:/home/gradle/project'
+  - '/cache:/home/gradle/project'
   - '-w'
   - '/home/gradle/project'
   - 'gradle:4.7.0-jdk10'
