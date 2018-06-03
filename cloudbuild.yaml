@@ -4,13 +4,17 @@ steps:
   - 'run'
   - '--rm'
   - '-v'
-  - '.:/home/gradle/project'
+  - 'build-dir:/home/gradle/project'
   - '-w'
   - '/home/gradle/project'
   - 'gradle:4.7.0-jdk10'
   - 'gradle'
   - 'build'
   - '--debug'
+  volume:
+  - name: 'build-dir'
+  - path: '/workdir'
+
 
 
 #  args:
