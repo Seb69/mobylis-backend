@@ -33,6 +33,7 @@ steps:
   - 'gradle:4.7.0-jdk10'
   - 'gradle'
   - 'build'
+  - '--info'
 
 #  args:
 #  - 'build'
