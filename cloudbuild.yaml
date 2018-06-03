@@ -5,10 +5,10 @@ steps:
   - '-R'
   - '777'
   - '/workspace'
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-  - 'pull'
-  - 'gradle:4.7.0-jdk10'
+#- name: 'gcr.io/cloud-builders/docker'
+#  args:
+#  - 'pull'
+#  - 'gradle:4.7.0-jdk10'
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'run'
@@ -20,8 +20,6 @@ steps:
   - 'gradle:4.7.0-jdk10'
   - 'gradle'
   - 'build'
-  - '--info'
 
-#  env: ['GRADLE_HOME=/workspace', 'GRADLE_USER_HOME=/workspace']
 #images:
 #- 'gcr.io/$PROJECT_ID/docker-compose:latest'
