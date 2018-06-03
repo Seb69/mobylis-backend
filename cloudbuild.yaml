@@ -1,9 +1,11 @@
 steps:
 - name: 'ubuntu'
-  dir: 'dist'
   args:
   - 'ls'
-  - '-a'
+- name: 'gcr.io/cloud-builders/git'
+  args:
+  - 'clone'
+  - 'https://Sebastien_Andre@bitbucket.org/Sebastien_Andre/mobylis-backend.git'
 #- name: 'gcr.io/cloud-builders/docker'
 #  args:
 #  - 'pull'
