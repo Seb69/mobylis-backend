@@ -1,14 +1,12 @@
 steps:
+
 - name: 'ubuntu'
   args:
   - 'chmod'
   - '-R'
   - '777'
   - '/workspace'
-#- name: 'gcr.io/cloud-builders/docker'
-#  args:
-#  - 'pull'
-#  - 'gradle:4.7.0-jdk10'
+
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'run'
