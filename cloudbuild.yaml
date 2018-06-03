@@ -27,7 +27,7 @@ steps:
   - 'run'
   - '--rm'
   - '-v'
-  - '/workspace/dist:/home/gradle/project'
+  - '/workspace:/home/gradle/project'
   - '-w'
   - '/home/gradle/project'
   - 'gradle:4.7.0-jdk10'
