@@ -1,6 +1,6 @@
 package com.mobylis.fr.mock;
 
-import com.mobylis.fr.domain.ProductMysql;
+import com.mobylis.fr.domain.Product;
 
 import java.math.BigDecimal;
 
@@ -10,32 +10,33 @@ import java.math.BigDecimal;
  */
 public class Product_Mock {
 
-    public static ProductMysql createA() {
+    public static Product createA() {
 
-        ProductMysql desk = new ProductMysql();
+        Product productCreationDTO = new Product();
 
-        desk.setName("Bureau Open Space");
-        desk.setBrand("MOBEL LINEA");
-        desk.setDescription("Mobilier très robuste et comfortable. " +
+        productCreationDTO.setName("Bureau Open Space");
+        productCreationDTO.setBrand("MOBEL LINEA");
+        productCreationDTO.setDescription("Mobilier très robuste et comfortable. " +
                 "Mobilier très robuste et comfortable.");
-        desk.setPrice(BigDecimal.valueOf(570L));
+        productCreationDTO.setPrice(BigDecimal.valueOf(570L));
 
-        desk.setCategory(Category_Mock.create());
-        return desk;
+        productCreationDTO.setCategory("SIEGES");
+        return productCreationDTO;
     }
 
 
-    public static ProductMysql createB() {
+    public static Product createB() {
 
-        ProductMysql desk = new ProductMysql();
+        Product productCreationDTO = new Product();
 
-        desk.setName("Bureau Open Space");
-        desk.setBrand("MOBEL LINEA");
-        desk.setDescription("Mobilier très robuste et comfortable.");
-        desk.setPrice(BigDecimal.valueOf(570L));
+        productCreationDTO.setName("Bureau Open Space");
+        productCreationDTO.setBrand("MOBEL LINEA");
+        productCreationDTO.setDescription("Mobilier très robuste et comfortable. " +
+                "Mobilier très robuste et comfortable.");
+        productCreationDTO.setPrice(BigDecimal.valueOf(570L));
 
-        desk.setCategory(Category_Mock.create());
+        productCreationDTO.setCategory("SIEGES");
 
-        return desk;
+        return productCreationDTO;
     }
 }

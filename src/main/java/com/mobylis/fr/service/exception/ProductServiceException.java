@@ -10,4 +10,7 @@ public class ProductServiceException extends RuntimeException {
         super(message, cause);
     }
 
+    public ProductServiceException(String reason) {
+        super(reason);
+    }
 }

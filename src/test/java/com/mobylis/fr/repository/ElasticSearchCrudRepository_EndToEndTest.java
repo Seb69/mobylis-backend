@@ -1,7 +1,6 @@
 package com.mobylis.fr.repository;
 
-import com.mobylis.fr.dto.ProductCreationDTO;
-import com.mobylis.fr.dto.ProductSearchDTO;
+import com.mobylis.fr.domain.Product;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+
 
 /**
  * Tester : ElasticSearchCrudRepository
@@ -45,7 +45,7 @@ public class ElasticSearchCrudRepository_EndToEndTest {
     @Test
     public void search_success() {
 
-        final Mono<List<ProductSearchDTO>> test = elasticSearchRepository.search("tes");
+        final Mono<List<Product>> test = elasticSearchRepository.search("tes");
 
         Assert.assertNotNull(test.block());
         System.out.println(test.block().toString());

@@ -1,11 +1,5 @@
-package com.mobylis.fr.elasticsearch;
+package com.mobylis.fr.service.elasticsearch;
 
-import com.mobylis.fr.domain.ProductMysql;
-import com.mobylis.fr.mock.Product_Mock;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetRequest;
@@ -16,19 +10,24 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.*;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,10 +42,15 @@ import java.util.stream.Stream;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("local-swarm")
+@TestPropertySource("classpath:env.yml")
 public class Index_EndToEndTest {
 
+    private static final String INDEX_NAME = "products";
+    private static final String INDEX_TYPE = "docs";
+
     @Autowired
-    EsIndex index;
+    EsIndexImpl index;
 
     @Before
     public void setUp() throws Exception {
@@ -71,8 +75,8 @@ public class Index_EndToEndTest {
         sourceBuilder.query(multiMatchQueryBuilder);
         sourceBuilder.from(0);
         sourceBuilder.size(5);
-        String[] includeFields = new String[] {"name", "price", "brand"};
-        String[] excludeFields = new String[] {"description","category"};
+        String[] includeFields = new String[]{"name", "price", "brand"};
+        String[] excludeFields = new String[]{"description", "category"};
         sourceBuilder.fetchSource(includeFields, excludeFields);
 
         searchRequest.source(sourceBuilder);
@@ -96,52 +100,34 @@ public class Index_EndToEndTest {
 
     @Test
     public void should_deleteIndex_data() throws Exception {
-
-        // BUILD
-        ProductMysql desk = Product_Mock.createA();
-        DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest();
-        deleteIndexRequest.indices("posts");
-
-        // OPERATE
-        final DeleteIndexResponse indexResponseMono = index.deleteIndex(deleteIndexRequest);
-
+//
+//        // BUILD
+//
+//        DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest();
+//        deleteIndexRequest.indices("posts");
+//
+//        // OPERATE
+//        final DeleteIndexResponse indexResponseMono = index.deleteIndex(deleteIndexRequest);
+//
 
     }
 
     @Test
     public void should_createIndex_data() throws Exception {
 
-        // BUILD
-        CreateIndexRequest createIndexRequest = new CreateIndexRequest();
-        createIndexRequest.settings(Settings.builder()
-                .put("index.number_of_shards", 1)
-                .put("index.number_of_replicas", 0)
-        );
-
-        createIndexRequest.index("seats");
-
-
-        // OPERATE
-        CreateIndexResponse indexResponseMono = index.createIndex(createIndexRequest);
-
-
-    }
-
-    @Test
-    public void should_index_data() throws Exception {
-
-        // BUILD
-        ProductMysql desk = Product_Mock.createA();
-
-        IndexRequest indexRequest = new IndexRequest("decks", "doc")
-                .source("name", desk.getName(),
-                        "brand", desk.getBrand(),
-                        "price", desk.getPrice(),
-                        "description", desk.getDescription());
-
-        // OPERATE
-        final IndexResponse indexResponseMono = index.index(indexRequest);
-
+//        // BUILD
+//        CreateIndexRequest createIndexRequest = new CreateIndexRequest();
+//        createIndexRequest.settings(Settings.builder()
+//                .put("index.number_of_shards", 1)
+//                .put("index.number_of_replicas", 0)
+//        );
+//
+//        createIndexRequest.index("seats");
+//
+//
+//        // OPERATE
+//        CreateIndexResponse indexResponseMono = index.createIndex(createIndexRequest);
+//
 
     }
 
@@ -149,10 +135,14 @@ public class Index_EndToEndTest {
     public void should_delete_data() throws Exception {
 
         // BUILD
-        DeleteRequest deleteRequest = new DeleteRequest("decks", "doc", "QqrmyGEBYcaSTSpZkep-");
+        DeleteRequest deleteRequest = new DeleteRequest(INDEX_NAME, INDEX_TYPE, "sV3qwGMBsu0ED7OekmN7");
 
         // OPERATE
-        final DeleteResponse delete = index.delete(deleteRequest);
+        final Mono<DeleteResponse> delete = index.delete(deleteRequest);
+
+        StepVerifier.create(delete)
+                .consumeNextWith(deleteResponse -> System.out.println(deleteResponse.toString()))
+                .verifyComplete();
 
     }
 
@@ -162,16 +152,18 @@ public class Index_EndToEndTest {
 
         // BUILD
         Map<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("description", "TEST UPDATE");
-        jsonMap.put("name", "TEST NAME UPDATE");
-        UpdateRequest updateRequest = new UpdateRequest("decks", "doc", "QarkyGEBYcaSTSpZR-oO").doc(jsonMap);
+        jsonMap.put("description", "TEST UDPZTAED UPDATE");
+        jsonMap.put("name", "TEST UPDATED NAME UPDATE");
+        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME, INDEX_TYPE, "r13ewGMBsu0ED7OeT2Mt").doc("description", "SEBASTIEN" + Math.random());
 
         // OPERATE
-        final UpdateResponse update = index.update(updateRequest);
+        final Mono<UpdateResponse> update = index.update(updateRequest);
 
-
+        // CHECK
+        StepVerifier.create(update)
+                .consumeNextWith(updateResponse -> System.out.println(updateResponse.toString()))
+                .verifyComplete();
     }
-
 
 
     @Test
@@ -181,14 +173,36 @@ public class Index_EndToEndTest {
         Map<String, Object> jsonMap = new HashMap<>();
         jsonMap.put("description", "TEST UPDATE");
         jsonMap.put("name", "TEST NAME UPDATE");
-        GetRequest getRequest = new GetRequest("decks", "doc", "RKoDyWEBYcaSTSpZKeoQ");
+        GetRequest getRequest = new GetRequest(INDEX_NAME, INDEX_TYPE, "sV3qwGMBsu0ED7OekmN7");
 
         // OPERATE
         final Mono<GetResponse> getResponseFlux = index.get(getRequest);
 
         // CHECK
-        getResponseFlux.subscribe(getResponse -> System.out.println(getResponse.getSourceAsString()));
-        Thread.sleep(10000);
+        StepVerifier.create(getResponseFlux)
+                .consumeNextWith(getResponse -> System.out.println(getResponse.getSourceAsString()))
+                .verifyComplete();
+    }
+
+
+    @Test
+    public void should_save_product() throws Exception {
+
+        // BUILD
+        Map<String, Object> jsonMap = new HashMap<>();
+        jsonMap.put("description", "TEST UPDATE");
+        jsonMap.put("name", "TEST NAME UPDATE");
+
+        IndexRequest indexRequest = new IndexRequest(INDEX_NAME, INDEX_TYPE);
+        indexRequest.source(jsonMap);
+
+        // OPERATE
+        final Mono<IndexResponse> getResponseFlux = index.index(indexRequest);
+
+        // CHECK
+        StepVerifier.create(getResponseFlux)
+                .consumeNextWith(indexResponse -> System.out.println(indexRequest.sourceAsMap().toString()))
+                .verifyComplete();
 
     }
 
@@ -214,6 +228,4 @@ public class Index_EndToEndTest {
     }
 
 
-
 }
-    

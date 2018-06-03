@@ -1,35 +1,13 @@
 package com.mobylis.fr.controller;
 
-import com.mobylis.fr.service.FileService;
-import javassist.bytecode.ByteArray;
-import org.apache.logging.log4j.core.util.FileUtils;
-import org.springframework.core.codec.Decoder;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.http.MediaType;
-import org.springframework.http.codec.multipart.FilePart;
-import org.springframework.http.codec.multipart.Part;
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.http.server.ServletServerHttpRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.reactive.function.BodyExtractor;
-import org.springframework.web.reactive.function.BodyExtractors;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.publisher.MonoSink;
-
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.mobylis.fr.service.file.FileService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author ANDRE
+ * @author ANDREŒŒŒOŒŒŒŒŒ
  * @since 03/03/2018
  */
 @RestController
@@ -48,7 +26,7 @@ public class FileController {
         return fileService.upload(files);
     }
 
-//    @PostMapping(
+//    @PostMapping(:
 //            value = "/file",
 //            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
 //    )

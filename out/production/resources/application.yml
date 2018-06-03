@@ -1,62 +1,34 @@
+server:
+  port: 80
 
 cloudinary:
   cloud-name: dqismn81g
   api-key: ${CLOUDINARY_API_KEY}
   api-secret: ${CLOUDINARY_API_SECRET}
+
 ---
 ##
 # Profile: Local-swarm launched
-# DATABASE: Swarm
 ##
-# Server port
-server:
-  port: 9093
+
 spring:
   profiles: local-swarm
-
-# Database
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mobylis?useSSL=false
-    username: mobylis-backend
-    password: ${MYSQL_PASSWORD_FILE}
-
-  jpa:
-    show-sql: true
-    generate-ddl: true
 
 elasticsearch:
   scheme: http
   host: localhost
   port: 9200
 
-
 logging.level:
-#    root: debug
     org.springframework.web: debug
     org.springframework.security: debug
 ---
 ##
 # Profile: Prod (docker swarm)
-# DATABASE: MYSQL - PROD
 ##
-# Server port
-server:
-  port: 9090
+
 spring:
   profiles: prod,production
-
-# Database
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/mobylis?useSSL=false
-    username: mobylis-backend
-    password: ${MYSQL_PASSWORD_FILE}
-    name: mobylis
-
-  jpa:
-    show-sql: false
-    generate-ddl: false
 
 elasticsearch:
   scheme: http

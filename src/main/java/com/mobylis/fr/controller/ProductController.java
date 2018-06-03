@@ -1,10 +1,13 @@
 package com.mobylis.fr.controller;
 
-import com.mobylis.fr.dto.ProductCreationDTO;
-import com.mobylis.fr.service.ProductService;
+import com.mobylis.fr.domain.Product;
+import com.mobylis.fr.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * @author ANDRE
@@ -23,28 +26,28 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductCreationDTO createProduct(@RequestBody ProductCreationDTO productView) {
+    public Mono<Boolean> createProduct(@RequestBody Product productView) {
 
         return productService.createProduct(productView);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductCreationDTO getProduct(@RequestParam("id") Long id) {
+    public Mono<List<Product>> getProduct(@RequestParam("id") String id) {
 
-        return productService.getProduct(id);
+        return productService.getProducts();
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateProduct(@RequestBody ProductCreationDTO product) {
+    public void updateProduct(@RequestBody Product product, @RequestParam("id") String id) {
 
-        productService.updateProduct(product);
+        productService.updateProduct(product, id);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteProduct(@RequestBody Long id) {
+    public void deleteProduct(@RequestBody String id) {
 
         productService.deleteProduct(id);
     }

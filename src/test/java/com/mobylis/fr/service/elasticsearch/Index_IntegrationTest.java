@@ -1,4 +1,4 @@
-//package com.mobylis.fr.elasticsearch;
+//package com.mobylis.fr.service.elasticsearch;
 //
 //import com.mobylis.fr.domain.Deck;
 //import org.elasticsearch.action.delete.DeleteRequest;

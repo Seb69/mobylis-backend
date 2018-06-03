@@ -1,6 +1,4 @@
-package com.mobylis.fr.service;
-
-import java.io.File;
+package com.mobylis.fr.service.file;
 
 /**
  * @author ANDRE
