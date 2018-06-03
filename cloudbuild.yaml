@@ -26,14 +26,14 @@ steps:
   args:
   - 'run'
   - '--rm'
-  - '-v'
-  - '/workspace:/home/gradle/project'
   - '-w'
   - '/home/gradle/project'
   - 'gradle:4.7.0-jdk10'
   - 'gradle'
   - 'build'
   - '--info'
+#  - '-v'
+#  - '/workspace:/home/gradle/project'
 
 #  args:
 #  - 'build'
