@@ -1,7 +1,7 @@
 steps:
 - name: 'ubuntu'
   args:
-  - 'pwd'
+  - 'll'
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'pull'
