@@ -3,22 +3,23 @@ steps:
   dir: 'dist'
   args:
   - 'ls'
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-  - 'pull'
-  - 'gradle:4.7.0-jdk10'
-- name: 'gcr.io/cloud-builders/docker'
-  dir: 'dist'
-  args:
-  - 'run'
-  - '--rm'
-  - '-v'
-  - '/workspace/dist:/home/gradle/project'
-  - '-w'
-  - '/home/gradle/project'
-  - 'gradle:4.7.0-jdk10'
-  - 'gradle'
-  - 'build'
+  - '-a'
+#- name: 'gcr.io/cloud-builders/docker'
+#  args:
+#  - 'pull'
+#  - 'gradle:4.7.0-jdk10'
+#- name: 'gcr.io/cloud-builders/docker'
+#  dir: 'dist'
+#  args:
+#  - 'run'
+#  - '--rm'
+#  - '-v'
+#  - '/workspace/dist:/home/gradle/project'
+#  - '-w'
+#  - '/home/gradle/project'
+#  - 'gradle:4.7.0-jdk10'
+#  - 'gradle'
+#  - 'build'
 
 #  args:
 #  - 'build'
