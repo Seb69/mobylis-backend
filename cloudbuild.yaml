@@ -3,12 +3,12 @@ steps:
   args:
   - 'ls'
   - '-l'
-- name: 'ubuntu'
-  args:
-  - 'chmod'
-  - '-R'
-  - '777'
-  - '/workspace'
+#- name: 'ubuntu'
+#  args:
+#  - 'chmod'
+#  - '-R'
+#  - '777'
+#  - '/workspace'
 - name: 'ubuntu'
   args:
   - 'ls'
@@ -35,13 +35,5 @@ steps:
   - 'build'
   - '--info'
 
-#  args:
-#  - 'build'
-#  - '--build-arg'
-#  - 'version=1.16.1'
-#  - '-t'
-#  - "eu.gcr.io/$PROJECT_ID/$REPO_NAME:latest"
-#  - '.'
-#
 #images:
 #- 'gcr.io/$PROJECT_ID/docker-compose:latest'
