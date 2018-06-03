@@ -8,7 +8,7 @@ steps:
   - 'chmod'
   - '-R'
   - '777'
-  - 'mobylis-backend'
+  - '/workspace/mobylis-backend'
 - name: 'gcr.io/cloud-builders/git'
   args:
   - 'clone'
