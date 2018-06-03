@@ -11,10 +11,6 @@ steps:
   - 'gradle'
   - 'build'
   - '--debug'
-volume:
-- name: 'workspace'
-- path: '/workspace'
-
 
 
 #  args:
