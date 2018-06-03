@@ -3,12 +3,12 @@ steps:
   args:
   - 'ls'
   - '-l'
-#- name: 'ubuntu'
-#  args:
-#  - 'chmod'
-#  - '-R'
-#  - '777'
-#  - '/workspace'
+- name: 'ubuntu'
+  args:
+  - 'chmod'
+  - '-R'
+  - '777'
+  - '/workspace'
 - name: 'ubuntu'
   args:
   - 'ls'
