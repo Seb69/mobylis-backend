@@ -3,6 +3,7 @@ package com.mobylis.fr.service;
 import com.cloudinary.Cloudinary;
 import com.mobylis.fr.configuration.TestConfiguration;
 import com.mobylis.fr.service.file.FileServiceImpl;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
@@ -25,6 +26,7 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestConfiguration
+@Ignore
 public class FileServiceImpl_IntegrationTest {
 
     @Autowired

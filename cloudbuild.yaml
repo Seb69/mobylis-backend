@@ -1,0 +1,24 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'run'
+  - '--rm'
+  - '-v'
+  - '"$PWD":/home/gradle/project'
+  - '-w'
+  - '/home/gradle/project'
+  - 'gradle:4.7.0-jdk10'
+  - 'gradle'
+  - 'build'
+
+
+#  args:
+#  - 'build'
+#  - '--build-arg'
+#  - 'version=1.16.1'
+#  - '-t'
+#  - "eu.gcr.io/$PROJECT_ID/$REPO_NAME:latest"
+#  - '.'
+#
+#images:
+#- 'gcr.io/$PROJECT_ID/docker-compose:latest'

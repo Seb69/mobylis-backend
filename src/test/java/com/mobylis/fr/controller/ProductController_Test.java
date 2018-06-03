@@ -52,7 +52,7 @@ public class ProductController_Test {
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isCreated()
-                .expectBody(Product.class).isEqualTo(productCreationDTO);
+                .expectBody(List.class);
 
 
         // CHECK

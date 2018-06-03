@@ -23,12 +23,11 @@ repositories {
 }
 
 test {
-    exclude '**/*EndToEndTest*'
+    exclude '**/*EndToEnd*'
 }
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-webflux')
-    //compile('javax.xml.bind:jaxb-api:2.3.0')
     compile group: 'com.cloudinary', name: 'cloudinary-http44', version: '1.18.0'
     compile('org.elasticsearch.client:elasticsearch-rest-high-level-client:6.2.4')
     compile('org.elasticsearch:elasticsearch:6.2.4')
