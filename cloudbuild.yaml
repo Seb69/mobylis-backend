@@ -22,7 +22,6 @@ steps:
   - 'pull'
   - 'gradle:4.7.0-jdk10'
 - name: 'gcr.io/cloud-builders/docker'
-  dir: 'dist'
   env: ['GRADLE_HOME=/workspace', 'GRADLE_USER_HOME=/workspace']
   args:
   - 'run'
