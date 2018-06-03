@@ -3,6 +3,12 @@ steps:
   args:
   - 'ls'
   - '-l'
+- name: 'ubuntu'
+  args:
+  - 'chmod'
+  - '-R'
+  - '777'
+  - 'mobylis-backend'
 - name: 'gcr.io/cloud-builders/git'
   args:
   - 'clone'
