@@ -1,7 +1,6 @@
 steps:
-- name: 'ubuntu'
-  args:
-  - 'll'
+#- name: 'ubuntu'
+#  args:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - 'pull'
@@ -18,8 +17,6 @@ steps:
   - 'gradle:4.7.0-jdk10'
   - 'gradle'
   - 'build'
-  - '--debug'
-
 
 #  args:
 #  - 'build'
