@@ -1,4 +1,4 @@
-FROM openjdk:9.0.1-jre-slim
+FROM openjdk:10.0.1-10-jre-slim-sid
 WORKDIR /tmp
 COPY ./build/libs/mobylis-backend.jar mobylis-backend.jar
 EXPOSE 80

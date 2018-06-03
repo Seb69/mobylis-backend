@@ -1,24 +1,24 @@
-./src
+
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen### Gradle template
 .gradle
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-nbproject/private/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
-!/build/libs/*.jar
+/cloudbuild.yaml
+/gradlew
+/gradlew.bat
+/README.md
+/settings.gradle
+/.gitignore
+/build.gradle
+/gradle/
+/src/
+/.gradle/
+/build/classes/
+/build/reports/
+/build/resources/
+/build/test-results/
+/build/tmp/

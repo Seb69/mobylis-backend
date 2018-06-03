@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "=> Building the binary"
-docker run --rm -v $(pwd):/home/gradle/project -w /home/gradle/project -u root gradle:4.7-jdk10 gradle build
