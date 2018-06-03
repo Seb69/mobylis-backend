@@ -9,6 +9,7 @@ steps:
   args:
   - 'pull'
   - 'gradle:4.7.0-jdk10'
+  - '--cache-from'
 - name: 'gcr.io/cloud-builders/docker'
   env: ['GRADLE_HOME=/workspace', 'GRADLE_USER_HOME=/workspace']
   args:
