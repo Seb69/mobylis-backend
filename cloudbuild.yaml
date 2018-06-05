@@ -24,7 +24,7 @@ steps:
   - 'build'
   - '.'
   - '-t'
-  - 'europe-west4.gcr.io/$PROJECT_ID/mobylis-backend:latest'
+  - 'gcr.io/$PROJECT_ID/mobylis-backend:latest'
 
 images:
-- 'europe-west4.gcr.io/$PROJECT_ID/mobylis-backend:latest'
+- 'gcr.io/$PROJECT_ID/mobylis-backend:latest'
