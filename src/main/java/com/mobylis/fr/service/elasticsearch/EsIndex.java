@@ -21,6 +21,8 @@ import reactor.core.publisher.Mono;
  */
 public interface EsIndex {
 
+  String test = "test";
+
   Mono<CreateIndexResponse> createIndex(CreateIndexRequest createIndexRequest);
 
   Mono<DeleteIndexResponse> deleteIndex(DeleteIndexRequest deleteIndexRequest);

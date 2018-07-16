@@ -42,7 +42,7 @@ import java.util.stream.Stream;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("local-swarm")
+@ActiveProfiles("prod")
 @TestPropertySource("classpath:env.yml")
 public class Index_EndToEndTest {
 

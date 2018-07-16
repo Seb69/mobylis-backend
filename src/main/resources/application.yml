@@ -32,6 +32,6 @@ spring:
 
 elasticsearch:
   scheme: http
-  host: elasticsearch
+  host: 35.234.67.234
   port: 9200
 
